@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | map </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"map","path":"basic/map.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p><code>map</code> 是一个无序的 <code>key/value</code> 对的集合。<strong><code>map</code> 是引用类型</strong>。这意味着它拥有对底层数据结构的引用，<br>就像指针一样。它底层的数据结构是 <code>hash table</code> 或 <code>hash map</code>。</p>
+<p><code>map</code> 作为引用类型是非常好的，因为无论 <code>map</code> 有多大，都只会有一个副本。</p>
+<p>定义 <code>map</code>，使用 <code>map</code> 关键字：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 声明变量，默认 map 是 nil */</span></span><br><span class="line"><span class="keyword">var</span> 变量名 <span class="keyword">map</span>[键类型]值类型</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用 make 函数 */</span></span><br><span class="line">变量名 := <span class="built_in">make</span>(<span class="keyword">map</span>[键类型]值类型)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 字面值的语法创建 */</span></span><br><span class="line">变量名 := <span class="keyword">map</span>[键类型]值类型&#123;</span><br><span class="line">  key1: value1,</span><br><span class="line">  key2: value2,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个 <code>map</code> 在未初始化之前默认为 <code>nil</code>。<br>通过索引下标 <code>key</code> 来访问 <code>map</code> 中对应的 <code>value</code><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">age, ok := ages[<span class="string">"bob"</span>]</span><br><span class="line"><span class="keyword">if</span> !ok &#123; <span class="comment">/* "bob" is not a key in this map; age == 0. */</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>ok</code> 表示操作结果，是一个布尔值。<strong>这叫做 <code>ok-idiom</code> 模式，就是在多返回值中返回一个 <code>ok</code> 布尔值，表示是否操作<br>成功</strong>。</p>
+<p>使用 <code>map</code> 过程中需要注意的几点：</p>
+<ul>
+<li><strong><code>map</code> 是无序的，每次打印出来的 <code>map</code> 都会不一样</strong>，它不能通过 <code>index</code> 获取，而必须通过 <code>key</code> 获取</li>
+<li><code>map</code> 的长度是不固定的，也就是和 <code>slice</code> 一样，也是一种引用类型</li>
+<li>内置的 <code>len</code> 函数同样适用于 <code>map</code>，返回 <code>map</code> 拥有的 <code>key</code> 的数量</li>
+<li><code>map</code> 的值可以很方便的修改，通过 <code>numbers[&quot;one&quot;]=11</code> 可以很容易的把 <code>key</code> 为 <code>one</code> 的字典值改为 11</li>
+<li><strong><code>map</code> 和其他基本型别不同，它不是 <code>thread-safe</code> 的</strong>，在多个 <code>go-routine</code> 存取时，必须使用 <code>mutex lock</code> 机制</li>
+</ul>
+<h4 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h4><p><code>delete</code> 函数删除 <code>map</code> 元素。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(mapName, key)</span><br></pre></td></tr></table></figure></p>
+<h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><p>可以使用 <code>for range</code> 遍历 <code>map</code>：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, value := <span class="keyword">range</span> mapName &#123;</span><br><span class="line">	fmt.Println(mapName[key])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong><code>Map</code> 的迭代顺序是不确定的。可以先使用 <code>sort</code> 包排序</strong>。</p>
+<h4 id="map-的键类型不能是哪些类型"><a href="#map-的键类型不能是哪些类型" class="headerlink" title="map 的键类型不能是哪些类型"></a>map 的键类型不能是哪些类型</h4><p><code>map</code> 的键和元素的最大不同在于，前者的类型是受限的，而后者却可以是任意类型的。</p>
+<p><strong><code>map</code> 的键类型不可以是函数类型、字典类型和切片类型</strong>。</p>
+<p>为什么？</p>
+<p>Go 语言规范规定，在<strong>键类型的值之间必须可以施加操作符 <code>==</code> 和 <code>!=</code></strong>。换句话说，键类型的值必须要支持判等操作。由于<br>函数类型、字典类型和切片类型的值并不支持判等操作，所以字典的键类型不能是这些类型。</p>
+<p>另外，如果键的类型是接口类型的，那么键值的实际类型也不能是上述三种类型，否则在程序运行过程中会引发 panic（即运行时恐慌）。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> badMap2 = <span class="keyword">map</span>[<span class="keyword">interface</span>&#123;&#125;]<span class="keyword">int</span>&#123;</span><br><span class="line"><span class="string">"1"</span>:   <span class="number">1</span>,</span><br><span class="line">[]<span class="keyword">int</span>&#123;<span class="number">2</span>&#125;: <span class="number">2</span>, <span class="comment">// 这里会引发 panic。</span></span><br><span class="line"><span class="number">3</span>:    <span class="number">3</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="优先考虑哪些类型作为字典的键类型"><a href="#优先考虑哪些类型作为字典的键类型" class="headerlink" title="优先考虑哪些类型作为字典的键类型"></a>优先考虑哪些类型作为字典的键类型</h4><p>求哈希和判等操作的速度越快，对应的类型就越适合作为键类型。</p>
+<p>对于所有的基本类型、指针类型，以及数组类型、结构体类型和接口类型，Go 语言都有一套算法与之对应。这套算法中就包含了哈希和判等。<br>以求哈希的操作为例，宽度越小的类型速度通常越快。对于布尔类型、整数类型、浮点数类型、复数类型和指针类型来说都是如此。对于字<br>符串类型，由于它的宽度是不定的，所以要看它的值的具体长度，长度越短求哈希越快。</p>
+<p>类型的宽度是指它的单个值需要占用的字节数。比如，<code>bool</code>、<code>int8</code> 和 <code>uint8</code> 类型的一个值需要占用的字节数都是 1，因此这<br>些类型的宽度就都是 1。</p>
+<h4 id="在值为-nil-的字典上执行读写操作会成功吗"><a href="#在值为-nil-的字典上执行读写操作会成功吗" class="headerlink" title="在值为 nil 的字典上执行读写操作会成功吗"></a>在值为 nil 的字典上执行读写操作会成功吗</h4><p>当我们仅声明而不初始化一个字典类型的变量的时候，它的值会是 <code>nil</code>。如果你尝试使用一个 <code>nil</code> 的 <code>map</code>，你会<br>得到一个 <code>nil</code> 指针异常，这将导致程序终止运行。所以不应该初始化一个空的 map 变量，比如 <code>var m map[string]string</code>。</p>
+<p><strong>除了添加键 - 元素对，我们在一个值为 <code>nil</code> 的字典上做任何操作都不会引起错误</strong>。当我们试图在一个值为 <code>nil</code> 的字典中<br>添加键 - 元素对的时候，Go 语言的运行时系统就会立即抛出一个 panic。</p>
+<p>可以先使用 <code>make</code> 函数初始化，或者 <code>dictionary = map[string]string{}</code>。这两种方法都可以创建一个空的 <code>hash map</code><br> 并指向 <code>dictionary</code>。这确保永远不会获得 <code>nil 指针异常</code>。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

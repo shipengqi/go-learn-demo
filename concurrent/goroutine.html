@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | goroutine </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"goroutine","path":"concurrent/goroutine.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h1><h2 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h2><h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>一个 cpu 上能同时执行多项任务，在很短时间内，cpu 来回切换任务执行(在某段很短时间内执行程序 a，然后又迅速得切换到程序 b 去执行)，<br>有时间上的重叠（宏观上是同时的，微观仍是顺序执行）,这样看起来多个任务像是同时执行，这就是<strong>并发</strong>。</p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>当系统有多个 CPU 时,每个 CPU 同一时刻都运行任务，互不抢占自己所在的 CPU 资源，同时进行，称为<strong>并行</strong>。并行是并发设计的<br>理想模式。</p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>cpu 在切换程序的时候，如果不保存上一个程序的状态（也就是我们常说的 <code>context</code> –上下文），直接切换下一个程序，就会丢失上一个<br>程序的一系列状态，于是引入了进程这个概念，用以划分好程序运行时所需要的资源。因此进程就是一个程序运行时候的所需要的基本资源单<br>位（也可以说是程序运行的一个实体）。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>cpu 切换多个进程的时候，会花费不少的时间，因为切换进程需要切换到内核态，而每次调度需要内核态都需要读取用户态的数据，进程<br>一旦多起来，cpu 调度会消耗一大堆资源，因此引入了线程的概念，线程本身几乎不占有资源，他们共享进程里的资源，内核调度起来不<br>会那么像进程切换那么耗费资源。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>多线程和多进程是并行的基本条件，但是单线程可以利用<strong>协程</strong>做到并发。协程拥有自己的寄存器上下文和栈。协程在线程上通过主动<br>切换来实现并发，减少了阻塞时间，还避免了线程切换的开销。但协程运行的并发本质上还是串行的。线程和进程的操作是由程序触发系统<br>接口，最后的执行者是系统；协程的操作执行者则是用户自身程序。</p>
+<h2 id="goroutine-1"><a href="#goroutine-1" class="headerlink" title="goroutine"></a>goroutine</h2><p>Go 语言在语言层面上支持了并发，简单将 <code>goroutine</code> 归为协程并不合适。Go runtime 会创建多个线程来执行并发任务，而且任务<br>可以跨线程调度。所以 goroutine 更像是多线程和协程的结合体。</p>
+<p><code>goroutine</code> 可以简单理解为协程，开销较低 (大概是 <code>4~5KB</code> )，当然会根据相应的数据伸缩。也正因为如此，可同时运行成千<br>上万个并发任务。<code>goroutine</code> 比 <code>thread</code> 更易用、更高效、更轻便。我们程序运行的 <strong><code>main</code> 函数在一个单独的 <code>goroutine</code> 中运行，<br>叫做 <code>主 goroutine</code></strong>。在代码中可以使用 <strong><code>go</code> 关键字创建 <code>goroutine</code></strong>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> f()</span><br></pre></td></tr></table></figure>
+<p><strong><code>main</code> 函数返回时，所有 <code>goroutine</code> 都会被打断，程序退出</strong>。除了从 <code>main</code> 函数退出或者直接终止程序之外，没有其它<br>的编程方法能够让一个 <code>goroutine</code> 来打断另一个的执行，但是之后可以看到一种方式来实现这个目的，通过 <code>goroutine</code> 之间<br>的通信来让一个 <code>goroutine</code> 请求其它的 <code>goroutine</code>，使被请求 <code>goroutine</code> 自行结束执行。</p>
+<h3 id="什么是主-goroutine，它与我们启用的其他-goroutine-有什么不同"><a href="#什么是主-goroutine，它与我们启用的其他-goroutine-有什么不同" class="headerlink" title="什么是主 goroutine，它与我们启用的其他 goroutine 有什么不同"></a>什么是主 goroutine，它与我们启用的其他 goroutine 有什么不同</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			fmt.Println(i)</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码会打印出什么内容？</p>
+<p>回答是：不会有任何内容被打印出来。</p>
+<p>Go 语言不但有着独特的并发编程模型，以及用户级线程 <code>goroutine</code>，还拥有强大的用于调度 <code>goroutine</code>、对接系统级线程的<br><strong>调度器</strong>。</p>
+<p>调度器的主要有 3 个重要部分，分别是 M、G、P。</p>
+<ul>
+<li>G（goroutine 的缩写）， 协程的实体，包括了调用栈，重要的调度信息，例如 channel 等。</li>
+<li>P（processor 的缩写），是衔接 M 和 G 的调度上下文，一个 P 可以承载若干个 G，且能够使这些 G 适时地与 M 进行<br>对接，并得到真正运行的中介。P 的数量可以通过 <code>runtime.GOMAXPROCS()</code> 来设置，P 的数量决定了系统内最大可并行的 G 的数量，<br>即有多少个 <code>goroutine</code> 可以同时运行。</li>
+<li>M（machine 的缩写），代表的是系统级线程，由操作系统管理。</li>
+</ul>
+<p>与一个进程总会有一个主线程类似，每一个独立的 Go 程序在运行时也总会有一个主 <code>goroutine</code>。这个主 <code>goroutine</code> 会在 Go 程<br>序的运行准备工作完成后被自动地启用，并不需要我们做任何手动的操作。</p>
+<p><strong>每条 <code>go</code> 语句一般都会携带一个函数调用，这个被调用的函数常常被称为 <code>go</code> 函数。而主 <code>goroutine</code> 的 <code>go</code> 函数就是<br>那个作为程序入口的 <code>main</code> 函数</strong>。</p>
+<p><strong><code>go</code> 函数真正被执行的时间总会与其所属的 <code>go</code> 语句被执行的时间不同</strong>。</p>
+<p>当程序执行到一条 <code>go</code> 语句的时候，<strong><code>go</code> 关键字并不是执行并发操作，而是创建一个并发任务单元</strong>。Go 语言的运行时系统，会先试图从某个<br>存放空闲的 G 的队列中获取一个 G（也就是 <code>goroutine</code>），它只有在找不到空闲 G 的情况下才会去创建一个新的 G。已存在<br>的 goroutine 总是会被优先复用。</p>
+<p>在拿到了一个空闲的 G 之后，Go 语言运行时系统会用这个 G 去包装当前的那个 <code>go</code> 函数（或者说该函数中的那些代码），然后再把这<br>个 G 追加到某个存放可运行的 G 的队列中。这类队列中的 G 总是会按照先入先出的顺序，很快地由运行时系统内部的调度器安排运行。<br>虽然这会很快，但是由于上面所说的那些准备工作还是不可避免的，所以耗时还是存在的。</p>
+<p>因此，<strong><code>go</code> 函数的执行时间总是会明显滞后于它所属的 <code>go</code> 语句的执行时间</strong>。当然了，这里所说的“明显滞后”是对于计算机<br>的 CPU 时钟和 Go 程序来说的。我们在大多数时候都不会有明显的感觉。</p>
+<p>请记住，<strong>只要 <code>go</code> 语句本身执行完毕，Go 程序完全不会等待 <code>go</code> 函数的执行，它会立刻去执行后边的语句</strong>。这就是所谓<br>的<strong>异步并发</strong>地执行。</p>
+<p>上面的代码中那 10 个包装了 <code>go</code> 函数的 <code>goroutine</code> 往往还没有获得运行的机会。但是如果有机会运行，打印的结果是什么，<br>全是 <code>10</code>？</p>
+<p>当 <code>for</code> 语句的最后一个迭代运行的时候，其中的那条 <code>go</code> 语句即是最后一条语句。所以，在执行完这条 <code>go</code> 语句之后，<br>主 <code>goroutine</code> 中的代码也就执行完了，Go 程序会立即结束运行。那么，如果这样的话，还会有任何内容被打印出来吗？</p>
+<p>Go 语言并不会去保证这些 <code>goroutine</code> 会以怎样的顺序运行。由于主 <code>goroutine</code> 会与我们手动启用的其他 <code>goroutine</code> 一起接受<br>调度，又因为调度器很可能会在 <code>goroutine</code> 中的代码只执行了一部分的时候暂停，以期所有的 goroutine 有更公平的运行机会。</p>
+<p>所以哪个 <code>goroutine</code> 先执行完、哪个 <code>goroutine</code> 后执行完往往是不可预知的，除非我们使用了某种 Go 语言提供的方式进行了人为<br>干预。</p>
+<h3 id="怎样才能让主-goroutine-等待其他-goroutine"><a href="#怎样才能让主-goroutine-等待其他-goroutine" class="headerlink" title="怎样才能让主 goroutine 等待其他 goroutine"></a>怎样才能让主 goroutine 等待其他 goroutine</h3><p>刚才说过，一旦主 <code>goroutine</code> 中的代码执行完毕，当前的 Go 程序就会结束运行，无论其他的 <code>goroutine</code> 是否已经在运行了。<br>那么，怎样才能做到等其他的 <code>goroutine</code> 运行完毕之后，再让主 <code>goroutine</code> 结束运行呢？</p>
+<ol>
+<li><strong>使用 <code>time</code> 包</strong>，可以简单粗暴的 <code>time.Sleep(time.Millisecond * 500)</code> 让主 <code>goroutine</code> “小睡”一会儿。<br>在这里传入了“500 毫秒”</li>
+</ol>
+<p>问题是我们让主 <code>goroutine</code> “睡眠”多长时间才是合适的呢？如果“睡眠”太短，则很可能不足以让其他的 <code>goroutine</code> 运行完毕，<br>而若“睡眠”太长则纯属浪费时间，这个时间就太难把握了。</p>
+<ol>
+<li><strong>使用通道</strong>。</li>
+<li><strong>使用 <code>sync</code> 包的 <code>sync.WaitGroup</code> 类型</strong></li>
+</ol>
+<h3 id="怎样让启用的多个-goroutine-按照既定的顺序运行"><a href="#怎样让启用的多个-goroutine-按照既定的顺序运行" class="headerlink" title="怎样让启用的多个 goroutine 按照既定的顺序运行"></a>怎样让启用的多个 goroutine 按照既定的顺序运行</h3><p>首先，我们需要稍微改造一下 <code>for</code> 语句中的那个 <code>go</code> 函数:<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">    &#125;(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>只有这样，Go 语言才能保证每个 <code>goroutine</code> 都可以拿到一个唯一的整数。这里有点像 js。</p>
+<p>在 <code>go</code> 语句被执行时，我们<strong>传给 <code>go</code> 函数的参数 <code>i</code> 会先被求值</strong>，如此就得到了当次迭代的序号。之后，无论 <code>go</code> 函数<br>会在什么时候执行，这个参数值都不会变。也就是说，<code>go</code> 函数中调用的 <code>fmt.Println</code> 函数打印的一定会是那个当次迭代的序号。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count <span class="keyword">uint32</span> = <span class="number">0</span></span><br><span class="line">trigger := <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">uint32</span>, fn <span class="keyword">func</span>()</span>)</span> &#123; <span class="comment">// func() 代表的是既无参数声明也无结果声明的函数类型</span></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> n := atomic.LoadUint32(&amp;count); n == i &#123;</span><br><span class="line">            fn()</span><br><span class="line">            atomic.AddUint32(&amp;count, <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        time.Sleep(time.Nanosecond)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> i := <span class="keyword">uint32</span>(<span class="number">0</span>); i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">uint32</span>)</span></span> &#123;</span><br><span class="line">        fn := <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">            fmt.Println(i)</span><br><span class="line">        &#125;</span><br><span class="line">        trigger(i, fn)</span><br><span class="line">    &#125;(i)</span><br><span class="line">&#125;</span><br><span class="line">trigger(<span class="number">10</span>, <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的代码中调用了一个名叫 <code>trigger</code> 的函数，并把 <code>go</code> 函数的参数 <code>i</code> 和刚刚声明的变量 <code>fn</code> 作为参数传给了它。<br><strong><code>func()</code> 代表的是既无参数声明也无结果声明的函数类型</strong>。</p>
+<p><code>trigger</code> 函数会不断地获取一个名叫 <code>count</code> 的变量的值，并判断该值是否与参数 <code>i</code> 的值相同。如果相同，那么就立<br>即调用 <code>fn</code> 代表的函数，然后把 <code>count</code> 变量的值加 <code>1</code>，最后显式地退出当前的循环。否则，我们就先让当前的<br><code>goroutine</code> “睡眠”一个纳秒再进入下一个迭代。</p>
+<p>操作变量 <code>count</code> 的时候使用的都是原子操作。这是由于 <code>trigger</code> 函数会被多个 <code>goroutine</code> 并发地调用，所以它用到的<br>非本地变量 <code>count</code>，就被多个用户级线程共用了。因此，对它的操作就产生了竞态条件（race condition），破坏了程序的并<br>发安全性。在 <code>sync/atomic</code> 包中声明了很多用于原子操作的函数。由于我选用的原子操作函数对被操作的数值的类型有约束，所<br>以对 <code>count</code> 以及相关的变量和参数的类型进行了统一的变更（由 <code>int</code> 变为了 <code>uint32</code>）。</p>
+<p>纵观 <code>count</code> 变量、<code>trigger</code> 函数以及改造后的 <code>for</code> 语句和 <code>go</code> 函数，我要做的是，让 <code>count</code> 变量成为一个信号，<br>它的值总是下一个可以调用打印函数的 <code>go</code> 函数的序号。</p>
+<p>这个序号其实就是启用 <code>goroutine</code> 时，那个当次迭代的序号。</p>
+<p>依然想让主 <code>goroutine</code> 最后一个运行完毕，所以还需要加一行代码。不过既然有了 <code>trigger</code> 函数，就没有再使用通道。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trigger(<span class="number">10</span>, <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Gosched"><a href="#Gosched" class="headerlink" title="Gosched"></a>Gosched</h3><p><code>runtime.Gosched()</code> 暂停，释放线程去执行其他任务。</p>
+<h3 id="Goexit"><a href="#Goexit" class="headerlink" title="Goexit"></a>Goexit</h3><p><code>runtime.Goexit()</code> 立即终止当前任务，runtime 会确保所有 defer 函数被执行。该函数不会影响其他并发任务。</p>
+<h3 id="goroutine-泄漏"><a href="#goroutine-泄漏" class="headerlink" title="goroutine 泄漏"></a>goroutine 泄漏</h3><p><code>goroutine</code> 被永远卡住，就会导致 <code>goroutine</code> 泄漏，例如当使用了无缓存的 <code>channel</code>，<code>goroutine</code> 因为 <code>channel</code> 的<br>数据没有被接收而被卡住。泄漏的 <code>goroutine</code> 不会被自动回收。</p>
+<h2 id="Goroutine-调度器"><a href="#Goroutine-调度器" class="headerlink" title="Goroutine 调度器"></a>Goroutine 调度器</h2><h3 id="调度器"><a href="#调度器" class="headerlink" title="调度器"></a>调度器</h3><p>Go 的 runtime 负责对 <code>goroutine</code> 进行“调度”。调度本质上就是决定何时哪个 <code>goroutine</code> 将获得资源开始执行、哪个 <code>goroutine</code><br>应该停止执行让出资源、哪个 <code>goroutine</code> 应该被唤醒恢复执行等。</p>
+<p>操作系统对进程、线程的调度是指操作系统调度器将系统中的多个线程按照一定算法调度到物理 CPU 上去运行。C、C++ 等的并发实现就是基<br>于操作系统调度的，即程序负责创建线程，操作系统负责调度。但是这种支持并发的方式有不少缺陷：</p>
+<ul>
+<li>对于很多网络服务程序，由于不能大量创建 thread，就要在少量 thread 里做网络多路复用，即：<br>使用 <code>epoll/kqueue/IoCompletionPort</code> 这套机制，即便有 <code>libevent/libev</code> 这样的第三方库帮忙，写起这样的程序也是很不易的</li>
+<li>一个 thread 的代价已经比进程小了很多了，但我们依然不能大量创建 thread，因为除了每个 thread 占用的资源不小之外，操<br>作系统调度切换 thread 的代价也不小；</li>
+<li>并发单元间通信困难，易错：多个 thread 之间的通信虽然有多种机制可选，但用起来是相当复杂；</li>
+</ul>
+<p>Go采用了<strong>用户层轻量级 thread</strong> 或者说是<strong>类 coroutine</strong> 的概念来解决这些问题，Go 将之称为 <strong>goroutine</strong>。</p>
+<p><strong>goroutine 占用的资源非常小(goroutine stack 的 size 默认为 2k)，goroutine 调度的切换也不用操作系统内核层完成，代价很低</strong>。<br>所有的 Go 代码都在 goroutine 中执行，go runtime 也一样。将这些 goroutines 按照一定算法放到“CPU”上执行的程序就叫做<br><strong>goroutine 调度器</strong>或 <strong>goroutine scheduler</strong>。</p>
+<p><strong>一个 Go 程序对于操作系统来说只是一个用户层程序，对于操作系统而言，它的眼中只有 thread，它并不知道什么是 Goroutine。<br>goroutine 的调度全要靠 Go 自己完成，实现 Go 程序内 goroutine 之间“公平”的竞争 CPU 资源，这个任务就落到了 Go runtime 头上</strong>，<br>在一个 Go 程序中，除了用户代码，剩下的就是 go runtime 了。</p>
+<p>Goroutine 的调度问题就变成了 <strong>go runtime 如何将程序内的众多 goroutine 按照一定算法调度到 CPU 资源上运行</strong>了。</p>
+<p>但是在<strong>操作系统层面，Thread 竞争的 CPU 资源是真实的物理 CPU</strong>，但在 Go 程序层面，各个 Goroutine 要竞争的 CPU 资源是什么呢？</p>
+<p>Go 程序是用户层程序，它本身整体是运行在一个或多个操作系统线程上的，因此 <strong>goroutine 们要竞争的所谓 CPU 资源就是操作系统线程</strong>。</p>
+<p>Go scheduler 的任务：<strong>将 goroutines 按照一定算法放到不同的操作系统线程中去执行</strong>。这种在语言层面自带调度器的，我们称<br>之为<strong>原生支持并发</strong>。</p>
+<h3 id="G-P-M-模型"><a href="#G-P-M-模型" class="headerlink" title="G-P-M 模型"></a>G-P-M 模型</h3><p>调度器的主要有 3 个重要部分，分别是 M、G、P。</p>
+<ul>
+<li>G（goroutine 的缩写）， 协程的实体，包括了调用栈，重要的调度信息，例如 channel 等。</li>
+<li>P（processor 的缩写），是衔接 M 和 G 的调度上下文，一个 P 可以承载若干个 G，且能够使这些 G 适时地与 M 进行<br>对接，并得到真正运行的中介。P 的数量可以通过 <code>runtime.GOMAXPROCS()</code> 来设置，P 的数量决定了系统内最大可并行的 G 的数量，<br>即有多少个 <code>goroutine</code> 可以同时运行。（前提：系统的物理 <code>cpu 核数 &gt;= P 的数量</code>），它维护了一个 goroutine 队列，里面存储<br>了所有需要它来执行的 goroutine。</li>
+<li>M（machine 的缩写），代表的是系统级线程，由操作系统管理。goroutine 就是跑在 M 之上的。在绑定有效的 P 后，进入 schedule 循环；<br>而 schedule 循环的机制大致是从各种队列、P 的本地队列中获取 G，切换到 G 的执行栈上并执行 G 的函数，调用 goexit 做清理工作<br>并回到 M，如此反复。M 并不保留 G 状态，这是 G 可以跨 M 调度的基础。</li>
+</ul>
+<p><img src="../imgs/goroutine-scheduler-model.png" alt></p>
+<h3 id="抢占式调度"><a href="#抢占式调度" class="headerlink" title="抢占式调度"></a>抢占式调度</h3><p>Go 并没有时间片的概念。如果某个 G 没有进行 system call 调用、没有进行 I/O 操作、没有阻塞在一个 channel 操作上，那么 M 是<br><strong>如何让 G 停下来并调度下一个 runnable G</strong> 的呢？</p>
+<p>答案是：G 是被抢占调度的。</p>
+<p>Go 在设计之初并没考虑将 goroutine 设计成抢占式的。用户负责让各个 goroutine 交互合作完成任务。一个 goroutine 只有在涉及到加锁，<br>读写通道或者主动让出 CPU 等操作时才会触发切换。</p>
+<p>垃圾回收器是需要 stop the world 的。如果垃圾回收器想要运行了，那么它必须先通知其它的 goroutine 合作停下来，这会造成较长时<br>间的等待时间。考虑一种很极端的情况，所有的 goroutine 都停下来了，只有其中一个没有停，那么垃圾回收就会一直等待着没有停的那一个。</p>
+<p>抢占式调度可以解决这种问题，在抢占式情况下，如果一个 goroutine 运行时间过长，它就会被剥夺运行权。Go 还只是引入了一些很初级<br>的抢占，只有长时间阻塞于系统调用，或者运行了较长时间才会被抢占。runtime 会在后台有一个检测线程，它会检测这些情况，<br>并通知 goroutine 执行调度。</p>
+<p>Go 程序的初始化过程中，runtime 开了一条后台线程，运行一个 <code>sysmon</code> 函数(一般称为监控线程)。这个函数会周期性地做 epoll 操作，<br>同时它还会检测每个 P 是否运行了较长时间。该 M 无需绑定 P 即可运行，该 M 在整个 Go 程序的运行过程中至关重要。</p>
+<p><code>sysmon</code> 每 <code>20us~10ms</code> 运行一次，<code>sysmon</code> 主要完成如下工作：</p>
+<ul>
+<li>释放闲置超过 5 分钟的 span 物理内存；</li>
+<li>如果超过 2 分钟没有垃圾回收，强制执行；</li>
+<li>将长时间未处理的 netpoll 结果添加到任务队列；</li>
+<li>向长时间运行的 G 任务发出抢占调度；</li>
+<li>收回因 syscall 长时间阻塞的P；</li>
+</ul>
+<h3 id="channel-阻塞或-network-I-O-情况下的调度"><a href="#channel-阻塞或-network-I-O-情况下的调度" class="headerlink" title="channel 阻塞或 network I/O 情况下的调度"></a>channel 阻塞或 network I/O 情况下的调度</h3><p>如果 G 被阻塞在某个 channel 操作或 network I/O 操作上时，G 会被放置到某个 wait 队列中，而 M 会尝试运行下一个 runnable<br>的 G；如果此时没有 runnable 的 G 供 M 运行，那么 M 将解绑 P，并进入 sleep 状态。当 I/O available 或 channel 操作完成，<br>在 wait 队列中的 G 会被唤醒，标记为 runnable，放入到某 P 的队列中，绑定一个 M 继续执行。</p>
+<h3 id="system-call-阻塞情况下的调度"><a href="#system-call-阻塞情况下的调度" class="headerlink" title="system call 阻塞情况下的调度"></a>system call 阻塞情况下的调度</h3><p>如果 G 被阻塞在某个 system call 操作上，那么不光 G 会阻塞，执行该 G 的 M 也会解绑 P(实质是被 sysmon 抢走了)，<br>与 G 一起进入 sleep 状态。如果此时有 idle 的 M，则 P 与其绑定继续执行其他 G；如果没有 idle M，但仍然有其他 G 要去执行，<br>那么就会创建一个新 M。</p>
+<p>当阻塞在 syscall 上的G完成 syscall 调用后，G 会去尝试获取一个可用的 P，如果没有可用的 P，那么 G 会被标记为 runnable，<br>之前的那个 sleep 的 M 将再次进入 sleep。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

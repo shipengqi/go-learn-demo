@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 使用文档主题 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"使用文档主题","path":"theme/theme-usage.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="使用文档主题"><a href="#使用文档主题" class="headerlink" title="使用文档主题"></a>使用文档主题</h1><p>本文档使用 <a href="https://zalando-incubator.github.io/hexo-theme-doc/index.html" target="_blank" rel="noopener">Hexo Doc Theme</a> 搭建。</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><ol>
+<li><p>获取源码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:zalando-incubator/hexo-theme-doc-seed.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>hexo-theme-doc-seed</code> 的以下文件拷贝到项目 root 目录下，例如 <code>kubernetes-learn</code>：</p>
+</li>
+</ol>
+<ul>
+<li><code>source</code> 目录</li>
+<li><code>_data</code> 目录</li>
+<li><code>images</code> 目录</li>
+<li><code>package.json</code></li>
+<li><code>_config.yaml</code></li>
+<li><code>.zappr.yaml</code></li>
+</ul>
+<ol start="3">
+<li><p>安装依赖</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>package.json</code>，否则 <code>hexo server</code> 或者 <code>hexo s</code> 可能会找不到命令。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"hexo"</span>: &#123;</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"3.9.0"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"start"</span>: <span class="string">"hexo s -p 8082"</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">../node_modules/hexo-theme-doc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果你的网站存放在子目录中，例如 http://yoursite.com/blog</span></span><br><span class="line"><span class="comment"># 则 url 设为 http://yoursite.com/blog 并把 root 设为 /blog/</span></span><br><span class="line"><span class="attr">url:</span> <span class="attr">http://www.shipengqi.top/kubernetes-learn</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/kubernetes-learn/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deploy</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">- type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:shipengqi/kubernetes-learn.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动开发服务，访问 <a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a> 。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn start</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h2><p><code>source</code> 目录下创建 <code>index.md</code> 文件。这个 <code>index.md</code> 文件就是文档首页。</p>
+<h2 id="添加文档"><a href="#添加文档" class="headerlink" title="添加文档"></a>添加文档</h2><p><code>source</code> 目录下创建 <code>markdown</code> 文件，例如：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Lorem Ipsum</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># Lorem Ipsum</span></span><br><span class="line"></span><br><span class="line">Lorem ipsum</span><br></pre></td></tr></table></figure>
+<p>也可以创建文档子目录，例如 <code>source/usage</code>。</p>
+<h2 id="Sidebar"><a href="#Sidebar" class="headerlink" title="Sidebar"></a>Sidebar</h2><p><code>source</code> 目录下的 <code>_data</code> 目录下的 <code>navigation.yaml</code> 设置 <code>sidebar</code> 和其他的一些配置。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logo:</span></span><br><span class="line"><span class="attr">  text:</span> <span class="string">My</span> <span class="string">Documentation</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">link</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">index.html</span></span><br><span class="line"></span><br><span class="line"><span class="attr">main:</span></span><br><span class="line"><span class="attr">- text:</span> <span class="string">PROJECTS</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">label</span></span><br><span class="line"><span class="attr">- text:</span> <span class="string">My</span> <span class="string">Awesome</span> <span class="string">Projects</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">link</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">projects/my-awesome-project.html</span></span><br><span class="line"><span class="attr">  children:</span></span><br><span class="line"><span class="attr">  - text:</span> <span class="string">My</span> <span class="string">Awesome</span> <span class="string">Projects</span> <span class="string">Page</span> <span class="number">1</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">link</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">projects/my-awesome-project-page-1.html</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>logo</strong>: navigation Logo</li>
+<li><strong>main</strong>: left sidebar</li>
+</ul>
+<p>对于每个导航项，必须定义一个 <code>type</code>，并根据类型定义 <code>text</code> 和 <code>path</code> 等其他属性。<br>每个导航项，也可以定义一个 <code>children</code>，这个属性可以嵌套导航项。</p>
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p><code>type</code> 有两种类型：</p>
+<ul>
+<li><strong>label</strong>: 导航项的标签</li>
+<li><strong>link</strong>: 导航项下级文档 link</li>
+</ul>
+<p><strong><code>link</code> 类型的导航项的 <code>path</code> 的值是文件的路径，但注意扩展名为<code>.html</code></strong>。</p>
+<h2 id="Favicon"><a href="#Favicon" class="headerlink" title="Favicon"></a>Favicon</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme_config:</span></span><br><span class="line"><span class="attr">  favicon:</span> <span class="string">images/favicon.ico</span></span><br></pre></td></tr></table></figure>
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

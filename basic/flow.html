@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 控制语句 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"控制语句","path":"basic/flow.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h1><h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 布尔表达式 &#123;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="if…else"><a href="#if…else" class="headerlink" title="if…else"></a>if…else</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 布尔表达式 &#123;</span><br><span class="line">   </span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> var1 &#123;</span><br><span class="line">    <span class="keyword">case</span> val1:</span><br><span class="line">        ...  <span class="comment">// 不需要显示的break，case 执行完会自动中断</span></span><br><span class="line">    <span class="keyword">case</span> val2:</span><br><span class="line">				...</span><br><span class="line">		<span class="keyword">case</span> val3,val4,...:		</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>val1</code>,<code>val2</code> … 类型不被局限于常量或整数，但必须是相同的类型。</p>
+<p><code>switch</code> 语句，你要明白其中的 <code>case</code> 表达式的所有子表达式的结果值都是要与 <code>switch</code> 表达式的结果值判等的，因此它们的类型必须相<br>同或者能够都统一到 <code>switch</code> 表达式的结果类型。<br>如果无法做到，那么这条 <code>switch</code> 语句就不能通过编译。</p>
+<p><strong><code>switch</code>语句在 <code>case</code> 子句的选择上是具有唯一性的</strong>。正因为如此，<code>switch</code> 语句不允许 <code>case</code> 表达式中的子表达式结果值存<br>在相等的情况，不论这些结果值相等的子表达式，是否存在于不同的 <code>case</code> 表达式中，都会是这样的结果。</p>
+<p><strong>普通 <code>case</code> 子句的编写顺序很重要，最上边的 <code>case</code> 子句中的子表达式总是会被最先求值，在判等的时候顺序也是这样</strong>。因此，<br>如果某些子表达式的结果值有重复并且它们与 <code>switch</code> 表达式的结果值相等，那么位置靠上的 <code>case</code> 子句总会被选中。</p>
+<h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p><code>select</code> 类似于用于通信的 <code>switch</code> 语句。每个 <code>case</code> 必须是一个通信操作，要么是发送要么是接收。</p>
+<p>当条件满足时，<code>select</code> 会去通信并执行 <code>case</code> 之后的语句，这时候其它通信是不会执行的。<br>如果多个 <code>case</code> 同时满足条件，<code>select</code> 会随机地选择一个执行。如果没有 <code>case</code> 可运行，它将阻塞，直到有 <code>case</code> 可运行。</p>
+<p>一个默认的子句应该总是可运行的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> communication clause:</span><br><span class="line">      ...     </span><br><span class="line">  <span class="keyword">case</span> communication clause:</span><br><span class="line">      ... </span><br><span class="line">  <span class="keyword">default</span>: <span class="comment">/* 可选 */</span></span><br><span class="line">			... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="for"><a href="#for" class="headerlink" title="for"></a>for</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> init; condition; post &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于  while (x &lt; 5) &#123; ... &#125;</span></span><br><span class="line"><span class="keyword">for</span> x &lt; <span class="number">5</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于 while (true) &#123; ... &#125;</span></span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key, value := <span class="keyword">range</span> oldMap &#123; <span class="comment">// 第二个循环变量可以忽略，但是第一个变量要忽略可以使用空标识符 _ 代替</span></span><br><span class="line">    newMap[key] = value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>for range</code> 支持遍历数组，切片，字符串，字典，通道，并返回索引和键值。<strong><code>for range</code> 会复制目标数据。可改用数组指针或者切片</strong>。<br><code>range</code> 关键字右边的位置上的代码被称为 <code>range</code> 表达式。</p>
+<ol>
+<li><strong><code>range</code> 表达式只会在 <code>for</code> 语句开始执行时被求值一次，无论后边会有多少次迭代</strong>；</li>
+<li><code>range</code> 表达式的求值结果会被复制，也就是说，被迭代的对象是 <code>range</code> 表达式结果值的副本而不是原值。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">numbers1 := []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i := <span class="keyword">range</span> numbers1 &#123;</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">3</span> &#123;</span><br><span class="line">        numbers1[i] |= i</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(numbers1)</span><br></pre></td></tr></table></figure>
+<p>打印的内容会是 <code>[1 2 3 7 5 6]</code>，为什么，首先 <code>i</code> 是切片的下标，当 <code>i</code> 的值等于 3 的时候，与之对应的是切片中的第 4 个元素<br>值 4。对 4 和 3 进行按位或操作得到的结果是 7。</p>
+<p>当 <code>for</code> 语句被执行的时候，在 <code>range</code> 关键字右边的 <code>numbers1</code> 会先被求值。<code>range</code> 表达式的结果值可以是数组、数组的指针、<br>切片、字符串、字典或者允许接收操作的通道中的某一个，并且结果值只能有一个。这里的 <code>numbers1</code> 是一个切片,那么迭代变量就可以<br>有两个，右边的迭代变量代表当次迭代对应的某一个元素值，而左边的迭代变量则代表该元素值在切片中的索引值。<br>循环控制语句：</p>
+<ul>
+<li><code>break</code>，用于中断当前 <code>for</code> 循环或跳出 <code>switch</code> 语句</li>
+<li><code>continue</code>，跳过当前循，继续进行下一轮循环。</li>
+<li><code>goto</code>，将控制转移到被标记的语句。通常与条件语句配合使用。可用来实现条件转移， 构成循环，跳出循环体等功能。不推荐<br>使用，以免造成流程混乱。</li>
+</ul>
+<p><code>goto</code> 实例：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LOOP: <span class="keyword">for</span> a &lt; <span class="number">20</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a == <span class="number">15</span> &#123;</span><br><span class="line">			<span class="comment">/* 跳过迭代 */</span></span><br><span class="line">			a = a + <span class="number">1</span></span><br><span class="line">			<span class="keyword">goto</span> LOOP</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"a的值为 : %d\n"</span>, a)</span><br><span class="line">	a ++  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用带有-range-子句的-for-语句遍历字符串值的时候应该注意"><a href="#使用带有-range-子句的-for-语句遍历字符串值的时候应该注意" class="headerlink" title="使用带有 range 子句的 for 语句遍历字符串值的时候应该注意"></a>使用带有 <code>range</code> 子句的 <code>for</code> 语句遍历字符串值的时候应该注意</h3><p>带有 <code>range</code> 子句的 <code>for</code> 语句会先把被遍历的字符串值拆成一个<strong>字节序列</strong>（注意是字节序列），然后再试图找出这个字节序列中<br>包含的每一个 UTF-8 编码值，或者说每一个 Unicode 字符。</p>
+<p>这样的 <code>for</code> 语句可以为两个迭代变量赋值。如果存在两个迭代变量，那么赋给第一个变量的值就将会是当前字节序列中的某个 UTF-8 编码<br>值的第一个字节所对应的那个索引值。而赋给第二个变量的值则是这个 UTF-8 编码值代表的那个 Unicode 字符，其类型会是 <code>rune</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str := <span class="string">"Go 爱好者 "</span></span><br><span class="line"><span class="keyword">for</span> i, c := <span class="keyword">range</span> str &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"%d: %q [% x]\n"</span>, i, c, []<span class="keyword">byte</span>(<span class="keyword">string</span>(c)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整的打印内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: <span class="string">'G'</span> [47]</span><br><span class="line">1: <span class="string">'o'</span> [6f]</span><br><span class="line">2: <span class="string">'爱'</span> [e7 88 b1]</span><br><span class="line">5: <span class="string">'好'</span> [e5 a5 bd]</span><br><span class="line">8: <span class="string">'者'</span> [e8 80 85]</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意了，’爱’是由三个字节共同表达的，所以第四个 Unicode 字符’好’对应的索引值并不是 3，而是 2 加 3 后得到的 5</strong>。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

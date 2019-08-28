@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 反射 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"反射","path":"basic/reflect.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>反射机制，能够在运行时更新变量和检查它们的值、调用它们的方法和它们支持的内在操作，而不需要在编译时就知道<br>这些变量的具体类型。弥补了静态语言在动态行为上的一些不足。</p>
+<h2 id="reflect-TypeOf"><a href="#reflect-TypeOf" class="headerlink" title="reflect.TypeOf"></a>reflect.TypeOf</h2><p><code>reflect.TypeOf</code> 获取类型信息。<br><code>reflect.TypeOf</code> 接受任意的 <code>interface{}</code> 类型, 并以 <code>reflect.Type</code> 形式返回其动态类型：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">t := reflect.TypeOf(<span class="number">3</span>)  <span class="comment">// a reflect.Type</span></span><br><span class="line">fmt.Println(t.String()) <span class="comment">// "int"</span></span><br><span class="line">fmt.Println(t)          <span class="comment">// "int"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> X <span class="keyword">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> a X = <span class="number">20</span></span><br><span class="line">	t := reflect.TypeOf(a)</span><br><span class="line">	fmt.Println(t.Name(), t.Kind()) <span class="comment">// X int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码，<strong>注意区分 Type 和 Kind，前者表示真实类型（静态类型），后者表示底层类型</strong>。所以在判断类型时，<br>要选择正确的方式。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> X <span class="keyword">int</span></span><br><span class="line"><span class="keyword">type</span> Y <span class="keyword">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> a, b X = <span class="number">10</span>, <span class="number">20</span></span><br><span class="line">	<span class="keyword">var</span> c Y = <span class="number">30</span></span><br><span class="line">	ta, tb, tc := reflect.TypeOf(a), reflect.TypeOf(b), reflect.TypeOf(c)</span><br><span class="line">	fmt.Println(ta == tb, ta == tc) <span class="comment">// true false</span></span><br><span class="line">	fmt.Println(ta.Kind() == tc.Kind()) <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="reflect-ValueOf"><a href="#reflect-ValueOf" class="headerlink" title="reflect.ValueOf"></a>reflect.ValueOf</h2><p><code>reflect.ValueOf</code> 专注于对象实例数据读写。<br><code>reflect.ValueOf</code> 接受任意的 <code>interface{}</code> 类型, 并以 <code>reflect.Value</code> 形式返回其动态值：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">v := reflect.ValueOf(<span class="number">3</span>) <span class="comment">// a reflect.Value</span></span><br><span class="line">fmt.Println(v)          <span class="comment">// "3"</span></span><br><span class="line">fmt.Printf(<span class="string">"%v\n"</span>, v)   <span class="comment">// "3"</span></span><br><span class="line">fmt.Println(v.String()) <span class="comment">// <span class="doctag">NOTE:</span> "&lt;int Value&gt;"</span></span><br><span class="line"></span><br><span class="line">x := <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="keyword">string</span></span><br><span class="line">&#125;&#123;expected&#125;</span><br><span class="line">val := reflect.ValueOf(x)</span><br><span class="line">field := val.Field(<span class="number">0</span>)</span><br><span class="line">fmt.Println(val)            <span class="comment">// &#123;Chris&#125;</span></span><br><span class="line">fmt.Println(field)          <span class="comment">//  Chris</span></span><br><span class="line">fmt.Println(field.String()) <span class="comment">// Chris</span></span><br></pre></td></tr></table></figure></p>
+<p>在 Go 中不能对切片使用等号运算符。你可以写一个函数迭代每个元素来检查它们的值。但是一种<br>比较简单的办法是使用 <code>reflect.DeepEqual</code>，它在判断两个变量是否相等时十分有用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestSumAll</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    got := SumAll([]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>&#125;, []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">9</span>&#125;)</span><br><span class="line">    want := []<span class="keyword">int</span>&#123;<span class="number">3</span>, <span class="number">9</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !reflect.DeepEqual(got, want) &#123;</span><br><span class="line">        t.Errorf(<span class="string">"got %v want %v"</span>, got, want)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>，<code>reflect.DeepEqual</code> 不是「类型安全」的，所以有时候会发生比较怪异的行为。比如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestSumAll</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    got := SumAll([]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>&#125;, []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">9</span>&#125;)</span><br><span class="line">    want := <span class="string">"bob"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !reflect.DeepEqual(got, want) &#123;</span><br><span class="line">        t.Errorf(<span class="string">"got %v want %v"</span>, got, want)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>尝试比较 <code>slice</code> 和 <code>string</code>。这显然是不合理的，但是却通过了测试。所以使用 <code>reflect.DeepEqual</code> 比较简洁但是在使用时需多加小心。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

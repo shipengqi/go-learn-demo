@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | Golang 介绍 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"Golang 介绍","path":"index.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="Golang-介绍"><a href="#Golang-介绍" class="headerlink" title="Golang 介绍"></a>Golang 介绍</h1><p>Go 语言非常简单，只有 25 个关键字：</p>
+<ul>
+<li><code>var</code> 和 <code>const</code> 声明变量和常量</li>
+<li><code>package</code> 和 <code>import</code> 声明所属包名和导入包。</li>
+<li><code>func</code> 用于定义函数和方法</li>
+<li><code>return</code> 用于从函数返回</li>
+<li><code>defer</code> 用于类似析构函数</li>
+<li><code>go</code> 用于并发</li>
+<li><code>select</code> 用于选择不同类型的通讯</li>
+<li><code>interface</code> 用于定义接口</li>
+<li><code>struct</code> 用于定义抽象数据类型</li>
+<li><code>break</code>、<code>case</code>、<code>continue</code>、<code>for</code>、<code>fallthrough</code>、<code>else</code>、<code>if</code>、<code>switch</code>、<code>goto</code>、<code>default</code> 流程控制语句</li>
+<li><code>chan</code> 用于 <code>channel</code> 通讯</li>
+<li><code>type</code> 用于声明自定义类型</li>
+<li><code>map</code> 用于声明 <code>map</code> 类型数据</li>
+<li><code>range</code> 用于读取 <code>slice</code>、<code>map</code>、<code>channel</code> 数据</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>Go 语言的四类数据类型</p>
+<ul>
+<li>基础类型，数值、字符串和布尔型</li>
+<li>复合类型，数组和结构体</li>
+<li>引用类型，指针、切片、字典、函数、通道</li>
+<li>接口类型</li>
+</ul>
+<h2 id="三种文件"><a href="#三种文件" class="headerlink" title="三种文件"></a>三种文件</h2><ul>
+<li>命令源码文件，如果一个源码文件声明属于 <code>main</code> 包，并且包含一个无参数声明且无结果声明的 <code>main</code> 函数，那么它就是命令源码文件。</li>
+<li>库源码文件，库源码文件是不能被直接运行的源码文件，它仅用于存放程序实体，这些程序实体可以被其他代码使用</li>
+<li>测试源码文件</li>
+</ul>
+<h2 id="package"><a href="#package" class="headerlink" title="package"></a>package</h2><p>在写 Go 语言的代码时，每个文件的头部都有一行 <code>package</code> 声明语句。比如 <code>package main</code>。这个声明表示这个源<br>文件属于哪个包（类似其他语言的 <code>modules</code> 或者 <code>libraries</code>）。 Go 语言的代码就是通过这个 <code>package</code> 来组织。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>使用 <code>//</code> 添加注释。一般我们会在包声明前添加注释，来对整个包挥着程序做整体的描述。</p>
+<h2 id="行分隔符"><a href="#行分隔符" class="headerlink" title="行分隔符"></a>行分隔符</h2><p>Go 中，一行代表一个语句结束，不需要以分号 <code>;</code> 结尾。多个语句写在同一行，则必须使用 <code>;</code>（不推荐使用）。 </p>
+<h2 id="os-Args"><a href="#os-Args" class="headerlink" title="os.Args"></a>os.Args</h2><p>程序的命令行参数可使用 <code>os.Args</code> 访问。<code>os.Args</code> 是一个字符串的切片。我们打印看一下：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"fmt"</span></span><br><span class="line">  <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ++ 和 -- 都只能放在变量名,如 i ++</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(os.Args); i ++ &#123;</span><br><span class="line">  	fmt.Println(os.Args[i])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后运行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run args1.go arg1 arg2 arg3</span><br></pre></td></tr></table></figure></p>
+<h2 id="空标识符"><a href="#空标识符" class="headerlink" title="空标识符"></a>空标识符</h2><p><code>_</code> 代表空标识符，<strong>Go 不允许有无用的变量，空标识符可以作为忽略占位符</strong>，比如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s, sep <span class="keyword">string</span></span><br><span class="line"><span class="keyword">for</span> _, arg := <span class="keyword">range</span> os.Args[<span class="number">1</span>:] &#123;</span><br><span class="line">	s += sep + arg</span><br><span class="line">	sep = <span class="string">" "</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>所有命名只能以字母或者 <code>_</code> 开头，可以包含字母，数字或者 <code>_</code>。区分大小写。<br>关键字不能定义变量名，如 <code>func</code>，<code>default</code>。</p>
+<p><strong>注意：函数内部定义的，只能在函数内部使用（函数级），在函数外部定义的（包级），可以在当前包的所有文件中是使用。<br>并且，是在函数外定义的名字，如果以大写字母开头，那么会被导出，也就是在包的外部也可以访问，所以定义名字时，要注意大小写。</strong></p>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><ul>
+<li><code>var</code> 声明变量</li>
+<li><code>const</code> 声明常量</li>
+<li><code>type</code> 声明类型</li>
+<li><code>func</code> 声明函数</li>
+</ul>
+<p>每个文件以 <code>package</code> 声明语句。比如 <code>package main</code>。</p>
+<h2 id="make-和-new"><a href="#make-和-new" class="headerlink" title="make 和 new"></a>make 和 new</h2><ol>
+<li><strong><code>make</code> 只能用于内建类型（<code>map</code>、<code>slice</code> 和<code>channel</code>）的内存分配。<code>new</code> 用于各种类型的内存分配</strong>。</li>
+<li><strong><code>make</code> 返回初始化后的（非零）值，<code>new</code> 返回指针</strong>。</li>
+<li><strong><code>new</code> 函数可以为引用类型分配内存，但这是不完整的创建。比如 <code>map</code>，它仅分配了字典本身需要的内存，但是并没有为<br>字典内的健值对分配内存，因此无法正常工作</strong>。</li>
+</ol>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p><strong>Go 强制使用显示类型转换</strong>。这样可以确定语句和表达式的明确含义。<strong>类型转换在编译期完成，包括强制转换和隐式转换</strong>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="number">10</span></span><br><span class="line">b := <span class="keyword">byte</span>(a)</span><br><span class="line">c := a + <span class="keyword">int</span>(b) <span class="comment">// 混合类型表达式必须保证类型一致</span></span><br></pre></td></tr></table></figure>
+<p>类型转换用于将一种数据类型的变量转换为另外一种类型的变量：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类型名(表达式)</span><br></pre></td></tr></table></figure></p>
+<p>实例：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum <span class="keyword">int</span> = <span class="number">17</span></span><br><span class="line"><span class="keyword">var</span> count <span class="keyword">int</span> = <span class="number">5</span></span><br><span class="line"><span class="keyword">var</span> mean <span class="keyword">float32</span></span><br><span class="line"></span><br><span class="line">mean = <span class="keyword">float32</span>(sum)/<span class="keyword">float32</span>(count)</span><br><span class="line">fmt.Printf(<span class="string">"mean 的值为: %f\n"</span>,mean)</span><br></pre></td></tr></table></figure></p>
+<p>对于整数类型值、整数常量之间的类型转换，原则上只要源值在目标类型的可表示范围内就是合法的。比如，<code>uint8(255)</code><br>可以把无类型的常量 255 转换为 <code>uint8</code> 类型的值，是因为 255 在 <code>[0, 255]</code> 的范围内。</p>
+<p>这种类型转换主要在<strong>切换同一基础类型不同精度范围</strong>时使用，比如我们要将 <code>int</code> 型转为 <code>int64</code> 类型时。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="number">100</span></span><br><span class="line">b := <span class="keyword">byte</span>(a)</span><br><span class="line">c := a + <span class="keyword">int</span>(b) 混合类型表达式，类型必须保持一致</span><br></pre></td></tr></table></figure>
+<p>在 Go 中，非布尔值不能当做 <code>true/false</code> 使用，这点和我常用的js不同：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x := <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> x &#123; <span class="comment">// 错误 x 不是布尔值</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果<strong>要转换为指针类型，或者单向 <code>channel</code>，或者函数，要给类型加上 <code>()</code>，避免编译器分析错误</strong>，如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x := <span class="number">100</span></span><br><span class="line">(*<span class="keyword">int</span>)(&amp;x) <span class="comment">// *int 加括号，否则会被解析为*(int(&amp;x))</span></span><br><span class="line"></span><br><span class="line">(&lt;- channel <span class="keyword">int</span>)(c)</span><br><span class="line">(<span class="function"><span class="keyword">func</span><span class="params">()</span>)<span class="params">(f)</span></span></span><br><span class="line"><span class="function"><span class="params">(<span class="keyword">func</span>()</span><span class="title">int</span>)<span class="params">(f)</span> // 有返回值的函数其实可以不加括号，但是加括号的话，语义清晰</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h2><p>使用 <code>type</code> 自定义类型，一般出现在包一级，与变量一样，如果类型名字的首字母是大写，则在包外部也可以使用：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> 类型名字 底层类型</span><br></pre></td></tr></table></figure></p>
+<p>如不同温度单位分别定义为不同的类型：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Celsius <span class="keyword">float64</span>    <span class="comment">// 摄氏温度</span></span><br><span class="line"><span class="keyword">type</span> Fahrenheit <span class="keyword">float64</span> <span class="comment">// 华氏温度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	AbsoluteZeroC Celsius = <span class="number">-273.15</span> <span class="comment">// 绝对零度</span></span><br><span class="line">	FreezingC     Celsius = <span class="number">0</span>       <span class="comment">// 结冰点温度</span></span><br><span class="line">	BoilingC      Celsius = <span class="number">100</span>     <span class="comment">// 沸水温度</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CToF</span><span class="params">(c Celsius)</span> <span class="title">Fahrenheit</span></span> &#123; <span class="keyword">return</span> Fahrenheit(c*<span class="number">9</span>/<span class="number">5</span> + <span class="number">32</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FToC</span><span class="params">(f Fahrenheit)</span> <span class="title">Celsius</span></span> &#123; <span class="keyword">return</span> Celsius((f - <span class="number">32</span>) * <span class="number">5</span> / <span class="number">9</span>) &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>自定义类型虽然置顶了底层类型，但是只是底层数据结构相同，不会继承底层类型的其他信息，比如（方法）。<br>不能隐式转换，不能直接用于比较表达式</strong>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> data <span class="keyword">int</span></span><br><span class="line"><span class="keyword">var</span> d data = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x <span class="keyword">int</span> = d       <span class="comment">// 错误：cannot use d (type data) as type int in assignment</span></span><br><span class="line"></span><br><span class="line">fmt.Println(d == x) <span class="comment">// 错误：invalid operation: d == x (mismatched types data and int)</span></span><br></pre></td></tr></table></figure>
+<h2 id="未命名类型"><a href="#未命名类型" class="headerlink" title="未命名类型"></a>未命名类型</h2><p>比如数组，切片，字典，通道等类型与内部具体的元素类型和长度等属性有关，所以叫做<strong>未命名类型</strong>（unnamed type）。</p>
+<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>断言，顾名思义就是果断的去猜测一个未知的事物。在 go 语言中，<code>interface{}</code> 就是这个神秘的未知类型，其<strong>断言操作就是用来<br>判断 <code>interface{}</code> 的类型</strong>。因为 <code>interface{}</code> 是个未知类型，在编译时无法确定，所以类型断言在运行时确定。</p>
+<p>Go 语言里面有一个语法，可以直接<strong>判断是否是该类型的变量：<code>value, ok = x.(T)</code></strong>，这里 <code>value</code> 就是变量的值，<code>ok</code> 是<br>一个 <code>bool</code> 类型，<code>x</code> 是 <code>interface{}</code> 变量，<code>T</code> 是断言的类型。</p>
+<p>该语法返回两个参数，第一个参数是 <code>x</code> 转化为 <code>T</code> 类型后的变量，第二个值是一个布尔值，若为 <code>true</code> 则表示断言成功，<br><code>false</code> 则表示断言失败。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// comma-ok</span></span><br><span class="line"><span class="keyword">for</span> index, element := <span class="keyword">range</span> list &#123;</span><br><span class="line">	<span class="keyword">if</span> value, ok := element.(<span class="keyword">int</span>); ok &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"list[%d] is an int and its value is %d\n"</span>, index, value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value, ok := element.(<span class="keyword">string</span>); ok &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"list[%d] is a string and its value is %s\n"</span>, index, value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value, ok := element.(Person); ok &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"list[%d] is a Person and its value is %s\n"</span>, index, value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"list[%d] is of a different type\n"</span>, index)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者 使用 switch</span></span><br><span class="line"><span class="keyword">for</span> index, element := <span class="keyword">range</span> list&#123;</span><br><span class="line">	<span class="keyword">switch</span> value := element.(<span class="keyword">type</span>) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="keyword">int</span>:</span><br><span class="line">			fmt.Printf(<span class="string">"list[%d] is an int and its value is %d\n"</span>, index, value)</span><br><span class="line">		<span class="keyword">case</span> <span class="keyword">string</span>:</span><br><span class="line">			fmt.Printf(<span class="string">"list[%d] is a string and its value is %s\n"</span>, index, value)</span><br><span class="line">		<span class="keyword">case</span> Person:</span><br><span class="line">			fmt.Printf(<span class="string">"list[%d] is a Person and its value is %s\n"</span>, index, value)</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			fmt.Println(<span class="string">"list[%d] is of a different type"</span>, index)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意，<code>x.(type)</code> 语法不能在 <code>switch</code> 外的任何逻辑里面使用，如果你要在 <code>switch</code> 外面判断一个类型就使用 <code>comma-ok</code></strong>。</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>对于在包一级声明的变量，它们的生命周期和程序的运行周期是一致的。<br>局部变量（包括函数的参数和返回值也是局部变量）的生命周期则是动态的：每次从创建一个新变量的声明语句开始，<br>直到该变量不再被引用为止，然后变量的存储空间可能被回收。</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>Go 语言的源码文件必须使用 UTF-8 编码格式进行存储。如果源码文件中出现了非 UTF-8 编码的字符，那么在构建、安装以及运行的时候，<br>go 命令就会报告错误“illegal UTF-8 encoding”。</p>
+<h3 id="ASCII-编码"><a href="#ASCII-编码" class="headerlink" title="ASCII 编码"></a>ASCII 编码</h3><p>ASCII 是英文“American Standard Code for Information Interchange”的缩写，中文译为美国信息交换标准代码。</p>
+<p>ASCII 编码方案使用单个字节（byte）的二进制数来编码一个字符。标准的 ASCII 编码用一个字节的最高比特（bit）位作为奇偶校验位，<br>而扩展的 ASCII 编码则将此位也用于表示字符。ASCII 编码支持的可打印字符和控制字符的集合也被叫做 ASCII 编码集。</p>
+<h3 id="unicode-编码"><a href="#unicode-编码" class="headerlink" title="unicode 编码"></a>unicode 编码</h3><p><strong>unicode 编码规范，实际上是另一个更加通用的、针对书面字符和文本的字符编码标准。它为世界上现存的所有自然语言中的每一个字符，<br>都设定了一个唯一的二进制编码</strong>。它定义了不同自然语言的文本数据在国际间交换的统一方式，并为全球化软件创建了一个重要的基础。</p>
+<p>Unicode 编码规范通常使用十六进制表示法来表示 Unicode 代码点的整数值，并使用“U+”作为前缀。比如，英文字母字符“a”的 Unicode<br>代码点是<code>U+0061</code>。在 Unicode 编码规范中，一个字符能且只能由与它对应的那个代码点表示。</p>
+<p>Unicode 编码规范提供了三种不同的编码格式，即：<code>UTF-8</code>、<code>UTF-16</code>和<code>UTF-32</code>。其中的 UTF 是 UCS Transformation Format 的缩写。<br>而 UCS 又是 Universal Character Set 的缩写，但也可以代表 Unicode Character Set。所以，UTF 也可以被翻译为 Unicode 转换格式。<br>它代表的是字符与字节序列之间的转换方式。</p>
+<p>在这几种编码格式的名称中，<strong>“-”右边的整数的含义是，以多少个比特位作为一个编码单元</strong>。以<code>UTF-8</code>为例，它会以 8 个比特，也就是一个字节，<br>作为一个编码单元。它与标准的 ASCII 编码是完全兼容的。也就是说，在<code>[0x00, 0x7F]</code>的范围内，这两种编码表示的字符都是相同的。<br>这也是 UTF-8 编码格式的一个巨大优势。</p>
+<p><strong>UTF-8 是一种可变宽的编码方案</strong>。换句话说，<strong>它会用一个或多个字节的二进制数来表示某个字符，最多使用四个字节</strong>。比如，对于一个英文字符，<br>它仅用一个字节的二进制数就可以表示，而对于一个中文字符，它需要使用三个字节才能够表示。不论怎样，一个受支持的字符总是可以由 UTF-8 编码<br>为一个字节序列。以下会简称后者为 UTF-8 编码值。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

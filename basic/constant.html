@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 常量 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"常量","path":"basic/constant.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h1><p><code>const</code> 声明常量，运行时不可改变（只读），注意常量的<strong>底层数据类型只能是基础类型（布尔型、数值型和字符串型）</strong>：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> 常量名字 类型 = 表达式</span><br></pre></td></tr></table></figure></p>
+<p>“类型”可以省略。也就是如果没有类型，可以通过表达式推导出类型。</p>
+<p>比如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明一个`string`类型</span></span><br><span class="line"><span class="keyword">const</span> b <span class="keyword">string</span> = <span class="string">"abc"</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">"abc"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明一组不同类型</span></span><br><span class="line"><span class="keyword">const</span> c, f, s = <span class="literal">true</span>, <span class="number">2.3</span>, <span class="string">"four"</span> <span class="comment">// bool, float64, string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量声明多个常量</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  Unknown = <span class="number">0</span></span><br><span class="line">  Female = <span class="number">1</span></span><br><span class="line">  Male = <span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> strSize = <span class="built_in">len</span>(<span class="string">"hello, world"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>常量表达式的值在<strong>编译期计算</strong>。因此常量表达式中，函数必须是内置函数。如 <code>unsafe.Sizeof()</code>，<code>len()</code>, <code>cap()</code>。</p>
+<p><strong>常量组中，如果不指定类型和初始值，那么就和上一行非空常量右值相同</strong>：<br>例如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	a = <span class="number">1</span></span><br><span class="line">	b</span><br><span class="line">	c = <span class="number">2</span></span><br><span class="line">	d</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">fmt.Println(a, b, c, d) <span class="comment">// "1 1 2 2"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h2><p><strong>Go 中没有枚举的定义，但是可以使用 <code>iota</code></strong>，<code>iota</code> 标识符可以认为是<strong>一个可以被编译器修改的常量</strong>。<br>在 <code>const</code> 声明中，被重置为 <code>0</code>，在第一个声明的常量所在的行，<code>iota</code> 将会被置为 <code>0</code>，然后在每一个有常量声明的<br>行加 <code>1</code>。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	a = <span class="literal">iota</span>   <span class="comment">// 0</span></span><br><span class="line">	b          <span class="comment">// 1</span></span><br><span class="line">	c          <span class="comment">// 2</span></span><br><span class="line">	d = <span class="string">"ha"</span>   <span class="comment">// "ha", iota += 1</span></span><br><span class="line">	e          <span class="comment">// "ha" ,不指定类型和初始值，那么就和上一行非空常量右值相同,  iota += 1</span></span><br><span class="line">	f = <span class="number">100</span>    <span class="comment">// 100, iota +=1</span></span><br><span class="line">	g          <span class="comment">// 100,不指定类型和初始值，那么就和上一行非空常量右值相同,  iota +=1</span></span><br><span class="line">	h = <span class="literal">iota</span>   <span class="comment">// 7, 中断的 iota 计数必须显示恢复</span></span><br><span class="line">	i          <span class="comment">// 8</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	i = <span class="number">1</span> &lt;&lt; <span class="literal">iota</span> <span class="comment">// 1, 1 &lt;&lt; 0</span></span><br><span class="line">	j = <span class="number">3</span> &lt;&lt; <span class="literal">iota</span> <span class="comment">// 6, 3 &lt;&lt; 1</span></span><br><span class="line">	k             <span class="comment">// 12, 3 &lt;&lt; 2</span></span><br><span class="line">	l             <span class="comment">// 24, 3 &lt;&lt; 3</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 包 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"包","path":"basic/package.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><p>Go 语言的包与其他语言的 <code>modules</code> 或者 <code>libraries</code> 类似。Go 语言有超过 100个 的标准包，可以使用<br> <code>go list std | wc -l</code> 查看包的数量。</p>
+<p>更多 Go 语言开源包，可以在 <a href="http://godoc.org" target="_blank" rel="noopener">这里</a> 搜索。</p>
+<p>Go 语言编译速度很快，主要依赖下面三点：</p>
+<ol>
+<li>导入的包必须在文件的头部显式声明，这样的话编译器就没有必要读取和分析整个源文件来判断包的依赖关系。</li>
+<li>禁止包的循环依赖，每个包可以被独立编译，而且很可能是被并发编译。</li>
+<li>编译后包的目标文件不仅仅记录包本身的导出信息，同时还记录了包的依赖关系。<br>因此，在<strong>编译一个包的时候，编译器只需读取每个导入包的目标文件，而不需要遍历所有依赖的的文件</strong>。</li>
+</ol>
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p>在 <code>package</code> 声明下面，我们需要导入一系列需要使用的包。比如 <code>import &quot;fmt&quot;</code>。注意如果导入了不需要的包，或者缺少了必要的包，<br>编译会失败。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入一个包</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入多个</span></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"fmt"</span></span><br><span class="line">  <span class="string">"os"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h2 id="main"><a href="#main" class="headerlink" title="main"></a>main</h2><p><code>main</code> 是一个特殊的包，<code>main</code> 包代表一个独立运行的程序，而不是一个 <code>modules</code> 或者 <code>libraries</code>。<code>main</code> 包里<br>必须有 <code>main</code> 函数，这个是程序的入口函数，并且 <code>mian</code> 函数没有参数。比如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Hello, 世界"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>函数声明使用 <code>func</code> 关键字。Go 不需要在语句或者声明的末尾添加分号。除非一行代码上有多条语句。</strong></p>
+<h2 id="点操作"><a href="#点操作" class="headerlink" title="点操作"></a>点操作</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">   . <span class="string">"fmt"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这个点操作的含义就是这个包导入之后在你调用这个包的函数时，你可以省略前缀的包名，也就是前面你调用的 <code>fmt.Println(&quot;hello world&quot;)</code><br>可以省略的写成 <code>Println(&quot;hello world&quot;)</code>。</p>
+<h3 id="导入包重命名"><a href="#导入包重命名" class="headerlink" title="导入包重命名"></a>导入包重命名</h3><p>如果导入两个相同名字的包，如 <code>math/rand</code> 包和 <code>crypto/rand</code> 包，可以为一个包重命名来解决名字冲突：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"crypto/rand"</span></span><br><span class="line">    mrand <span class="string">"math/rand"</span> <span class="comment">// alternative name mrand avoids conflict</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>注意，重命名的包名只在当前源文件有效。</p>
+<p>有些情况下也可以使用包重命名：</p>
+<ol>
+<li>包名很长。重命名一个简短的包名。</li>
+<li>与变量名冲突。</li>
+</ol>
+<p>选择用简短名称重命名导入包时候最好统一，以避免包名混乱。</p>
+<h3 id="匿名导入"><a href="#匿名导入" class="headerlink" title="匿名导入"></a>匿名导入</h3><p>比如 <code>import _ &quot;image/png&quot;</code>，<code>_</code> 是空白标识符，不能被访问。<br>匿名导入有什么用？我们知道如果导入一个包而不使用会导致编译错误 <code>unused import</code>。当我们想要导入包，<br>仅仅只是想计算导入包的包级变量的初始化表达式和执行导入包的 <code>init</code> 初始化函数，就可以使用匿名导入。</p>
+<h3 id="声明所属的代码包与其所在目录的名称不同时"><a href="#声明所属的代码包与其所在目录的名称不同时" class="headerlink" title="声明所属的代码包与其所在目录的名称不同时"></a>声明所属的代码包与其所在目录的名称不同时</h3><p>源码文件所在的目录相对于 <code>src</code> 目录的相对路径就是它的代码包导入路径，而实际使用其程序实体时给定的限定符要与它<br>声明所属的代码包名称对应。为了不让该代码包的使用者产生困惑，我们总是应该让声明的包名与其父目录的名称一致。</p>
+<h2 id="包声明"><a href="#包声明" class="headerlink" title="包声明"></a>包声明</h2><p>包声明语句（包名）必须在每个源文件的开头。被其它包导入时默认的标识符。每个包都对应一个独立的名字空间，<br>如：<code>image</code> 包和 <code>unicode/utf16</code> 包中都包含了 <code>Decode</code>。要在外部引用该函数，必须显式使用 <code>image.Decode</code> 或<br><code>utf16.Decode</code> 形式访问。</p>
+<p><strong>包内以大写字母开头定义的名字（包括变量，类型，函数等等），会被导出，可以在包的外部访问。</strong></p>
+<p>默认包名一般采用导入路径名的最后一段，比如 <code>GOPTAH/src/packages/test</code> 的 <code>test</code> 就是包名。三种情况例外：</p>
+<ol>
+<li><code>main</code> 包，<code>go build</code> 命令编译完之后生成一个可执行程序。</li>
+<li>以 <code>_test</code> 为后缀包名的测试外部扩展包都由 <code>go test</code> 命令独立编译。(以 <code>_</code> 或 <code>.</code> 开头的源文件会被构建工具忽略)</li>
+<li>如 <code>gopkg.in/yaml.v2</code>。包的名字包含版本号后缀 <code>.v2</code>，这种情况下包名是 <code>yaml</code>。</li>
+</ol>
+<h2 id="包命名"><a href="#包命名" class="headerlink" title="包命名"></a>包命名</h2><p>包命名尽量有描述性且无歧义，简短，避免冲突。</p>
+<h2 id="初始化包"><a href="#初始化包" class="headerlink" title="初始化包"></a>初始化包</h2><p>包的初始化首先是解决包级变量的依赖顺序，然后按照包级变量声明出现的顺序依次初始化：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = b + c <span class="comment">// a 第三个初始化, 为 3</span></span><br><span class="line"><span class="keyword">var</span> b = f()   <span class="comment">// b 第二个初始化, 为 2, 通过调用 f (依赖c)</span></span><br><span class="line"><span class="keyword">var</span> c = <span class="number">1</span>     <span class="comment">// c 第一个初始化, 为 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span><span class="params">()</span> <span class="title">int</span></span> &#123; <span class="keyword">return</span> c + <span class="number">1</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果包中含有多个源文件，构建工具首先会将 <code>.go</code> 文件根据文件名排序，然后依次调用编译器编译。</p>
+<p>每个包在解决依赖的前提下，以导入声明的顺序初始化，每个包只会被初始化一次。因此，如果一个 p 包导入了 q 包，<br>那么在 p 包初始化的时候可以认为 q 包必然已经初始化过了。初始化工作是自下而上进行的，<code>main</code> 包最后被初始化。以这种方式，<br>可以确保在 <code>main</code> 函数执行之前，所有依赖的包都已经完成初始化工作了。</p>
+<h3 id="使用-init-函数"><a href="#使用-init-函数" class="headerlink" title="使用 init 函数"></a>使用 <code>init</code> 函数</h3><p>使用 <code>init</code> 函数来简化初始化工作，<code>init</code> 函数和普通函数类似，但是不能被调用或引用。<br>程序开始执行时按照它们声明的顺序自动调用。<br><code>init</code> 函数不能有任何的参数和返回值，虽然一个 <code>package</code> 里面可以写任意多个 <code>init</code> 函数，但这无论是对于可读性还是以后的可维护性来说，<br>我们都强烈建议用户在一个 <code>package</code> 中每个文件只写一个 <code>init</code> 函数。</p>
+<p>程序的初始化和执行都起始于 <code>main</code> 包。如果 <code>main</code> 包还导入了其它的包，那么就会在编译时将它们依次导入。有时一个包会被多个包同时导入，<br>那么它只会被导入一次（例如很多包可能都会用到 <code>fmt</code> 包，但它只会被导入一次，因为没有必要导入多次）。当一个包被导入时，如果该包还导入了<br>其它的包，那么会先将其它包导入进来，然后再对这些包中的包级常量和变量进行初始化，接着执行 <code>init</code> 函数（如果有的话），依次类推。等所有<br>被导入的包都加载完毕了，就会开始对 <code>main</code> 包中的包级常量和变量进行初始化，然后执行 <code>main</code> 包中的 <code>init</code> 函数（如果存在的话），最后<br>执行 <code>main</code> 函数。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

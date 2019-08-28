@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | 变量 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"变量","path":"basic/var.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p><code>var</code> 声明变量，必须使用空格隔开：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名字 类型 = 表达式</span><br></pre></td></tr></table></figure></p>
+<p><strong>类型</strong>或者<strong>表达式</strong>可以省略其中的一个。也就是如果没有类型，可以通过表达式推断出类型，<strong>没有表达式，将会根据类型初始化为对应的零值</strong>。</p>
+<p>“零值”，所指并非是空值，而是一种“变量未填充前”的默认值，通常为 <code>0</code>，对应关系：</p>
+<ul>
+<li>数值类型：<code>0</code></li>
+<li>布尔类型：<code>false</code></li>
+<li>字符串: <code>&quot;&quot;</code></li>
+<li>接口或引用类型（包括 <code>slice</code>、指针、<code>map</code>、<code>chan</code> 和函数）：<code>nil</code></li>
+</ul>
+<h2 id="声明一组变量"><a href="#声明一组变量" class="headerlink" title="声明一组变量"></a>声明一组变量</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名字, 变量名字, 变量名字 ... 类型 = 表达式, 表达式, 表达式, ...</span><br></pre></td></tr></table></figure>
+<p>比如：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明一组 `int` 类型</span></span><br><span class="line"><span class="keyword">var</span> i, j, k <span class="keyword">int</span>                 <span class="comment">// int, int, int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明一组不同类型</span></span><br><span class="line"><span class="keyword">var</span> b, f, s = <span class="literal">true</span>, <span class="number">2.3</span>, <span class="string">"four"</span> <span class="comment">// bool, float64, string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">  i <span class="keyword">int</span></span><br><span class="line">  pi <span class="keyword">float32</span></span><br><span class="line">  prefix <span class="keyword">string</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h2 id="简短声明"><a href="#简短声明" class="headerlink" title="简短声明"></a>简短声明</h2><p><strong><code>:=</code> 只能在函数内使用，不能提供数据类型</strong>，Go 会自动推断类型：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量名字 := 表达式</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(&amp;x, x)</span><br><span class="line">	x := <span class="string">"abc"</span></span><br><span class="line">	fmt.Println(&amp;x, x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中 <code>x := &quot;abc&quot;</code> 相当于重新定义并初始化了同名的局部变量 <code>x</code>，因为<strong>不在同一个作用域</strong>，所以打印出来的结果完全不同。</p>
+<p>简短声明，并不总是重新定义比变量，要避免重新定义，首先要在同一个作用域中，至少有一个新的变量被定义：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	x := <span class="number">100</span></span><br><span class="line">	fmt.Println(&amp;x, x)</span><br><span class="line">	x, y := <span class="number">200</span>, <span class="number">300</span>   <span class="comment">// 一个新的变量 y，这里的简短声明 x 就是赋值操作</span></span><br><span class="line">	fmt.Println(&amp;x, x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果重复使用简短声明定义一个变量，会报错：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x := <span class="number">100</span></span><br><span class="line">fmt.Println(&amp;x)</span><br><span class="line">x := <span class="number">200</span> <span class="comment">// 错误， no new variables on left side of :=</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>常见的赋值的方式：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">1</span>                       <span class="comment">// 命名变量的赋值</span></span><br><span class="line">*p = <span class="literal">true</span>                   <span class="comment">// 通过指针间接赋值</span></span><br><span class="line">person.name = <span class="string">"bob"</span>         <span class="comment">// 结构体字段赋值</span></span><br><span class="line">count[x] = count[x] * scale <span class="comment">// 数组、slice 或 map 的元素赋值</span></span><br><span class="line">count[x] *= scale           <span class="comment">// 等价于 count[x] = count[x] * scale，但是省去了对变量表达式的重复计算</span></span><br><span class="line">x, y = y, x                 <span class="comment">// 交换值</span></span><br><span class="line">f, err = os.Open(<span class="string">"foo.txt"</span>) <span class="comment">// 左边变量的数目必须和右边一致，函数一般会返回一个 error 类型</span></span><br><span class="line">v, ok = m[key]              <span class="comment">// map 查找，返回布尔值类表示操作是否成功</span></span><br><span class="line">v = m[key]                  <span class="comment">// map 查找，也可以返回一个值，失败时返回零值</span></span><br></pre></td></tr></table></figure></p>
+<p>不管是隐式还是显式地赋值，在赋值语句左边的变量和右边最终的求到的值必须有相同的数据类型。这就是<strong>可赋值性</strong>。</p>
+<p>进行<strong>多变量赋值</strong>时，首先计算出所有右值，然后再依次赋值：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x, y := <span class="number">1</span>, <span class="number">2</span></span><br><span class="line">x, y = y+<span class="number">3</span>, x+<span class="number">2</span> <span class="comment">// 先计算出 y+3, x+2, 然后赋值</span></span><br></pre></td></tr></table></figure></p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

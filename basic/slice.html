@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | slice </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"slice","path":"basic/slice.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h1><p><code>slice</code> 的语法和数组很像，由于数组长度是固定的，所以使用 <code>slice</code> 相比数组会更灵活，<code>slice</code> 是动态的，<br>长度可以增加也可以减少。还有一点与数组不同，切片不需要说明长度。</p>
+<p><strong>切片（slice） 是对底层数组一个连续片段的引用，所以切片是一个引用类型</strong>。</p>
+<p><strong>定义切片，和定义数组的区别就是不需要指定 <code>SIZE</code></strong>：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名 []类型</span><br></pre></td></tr></table></figure></p>
+<p>一个 <code>slice</code> 由三个部分构成：指针、长度和容量。长度不能超过容量。<br>一个切片在未初始化之前默认为 <code>nil</code>，长度为 <code>0</code>。</p>
+<p>初始化切片：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接初始化切片，[] 表示是切片类型，&#123;1,2,3&#125;初始化值依次是1,2,3.其 cap=len=3</span></span><br><span class="line">s :=[]<span class="keyword">int</span> &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化切片s,是数组arr的引用</span></span><br><span class="line">s := arr[:]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将arr中从下标startIndex到endIndex-1 下的元素创建为一个新的切片</span></span><br><span class="line">s := arr[startIndex:endIndex] </span><br><span class="line"></span><br><span class="line"><span class="comment">// 缺省endIndex时将表示一直到arr的最后一个元素</span></span><br><span class="line">s := arr[startIndex:] </span><br><span class="line"></span><br><span class="line"><span class="comment">// 缺省startIndex时将表示从arr的第一个元素开始</span></span><br><span class="line">s := arr[:endIndex]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 make 函数来创建切片</span></span><br><span class="line"><span class="comment">// len 是数组的长度并且也是切片的初始长度</span></span><br><span class="line"><span class="comment">// capacity 为可选参数, 指定容量</span></span><br><span class="line">s := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>, capacity)</span><br></pre></td></tr></table></figure></p>
+<h2 id="len-和-cap"><a href="#len-和-cap" class="headerlink" title="len() 和 cap()"></a>len() 和 cap()</h2><ul>
+<li><code>len</code>获取切片长度。</li>
+<li><code>cap</code>计算切片的最大容量</li>
+</ul>
+<h2 id="append-和-copy"><a href="#append-和-copy" class="headerlink" title="append() 和 copy()"></a>append() 和 copy()</h2><ul>
+<li><code>append</code> 向切片追加新元素</li>
+<li><code>copy</code> 拷贝切片</li>
+</ul>
+<h2 id="截取切片"><a href="#截取切片" class="headerlink" title="截取切片"></a>截取切片</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 创建切片 */</span></span><br><span class="line">numbers := []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;   </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 打印子切片从索引1(包含) 到索引4(不包含)*/</span></span><br><span class="line">fmt.Println(<span class="string">"numbers[1:4] =="</span>, numbers[<span class="number">1</span>:<span class="number">4</span>]) <span class="comment">// numbers[1:4] == [1 2 3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 默认下限为 0*/</span></span><br><span class="line">fmt.Println(<span class="string">"numbers[:3] =="</span>, numbers[:<span class="number">3</span>]) <span class="comment">// numbers[:3] == [0 1 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 默认上限为 len(s)*/</span></span><br><span class="line">fmt.Println(<span class="string">"numbers[4:] =="</span>, numbers[<span class="number">4</span>:]) <span class="comment">// numbers[4:] == [4 5 6 7 8]</span></span><br><span class="line"></span><br><span class="line">numbers1 := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>,<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 打印子切片从索引  0(包含) 到索引 2(不包含) */</span></span><br><span class="line">number2 := numbers[:<span class="number">2</span>]</span><br><span class="line">fmt.Printf(<span class="string">"len=%d cap=%d slice=%v\n"</span>,<span class="built_in">len</span>(number2),<span class="built_in">cap</span>(number2),number2) <span class="comment">// len=2 cap=9 slice=[0 1]</span></span><br><span class="line"><span class="comment">/* 打印子切片从索引 2(包含) 到索引 5(不包含) */</span></span><br><span class="line">number3 := numbers[<span class="number">2</span>:<span class="number">5</span>]</span><br><span class="line">fmt.Printf(<span class="string">"len=%d cap=%d slice=%v\n"</span>,<span class="built_in">len</span>(number3),<span class="built_in">cap</span>(number3),number3) <span class="comment">// len=3 cap=7 slice=[2 3 4]</span></span><br></pre></td></tr></table></figure>
+<h2 id="怎样估算切片容量的增长"><a href="#怎样估算切片容量的增长" class="headerlink" title="怎样估算切片容量的增长"></a>怎样估算切片容量的增长</h2><p>一旦<strong>一个切片无法容纳更多的元素，Go 语言就会想办法扩容。但它并不会改变原来的切片，而是会生成一个容量更大的切片，<br>然后将把原有的元素和新元素一并拷贝到新切片中</strong>。一般的情况下，你<strong>可以简单地认为新切片的容量（以下简称新容量）将会是<br>原切片容量（以下简称原容量）的 2 倍</strong>。</p>
+<p>但是，当原切片的长度（以下简称原长度）大于或等于 1024 时，Go 语言将会以原容量的 1.25 倍作为新容量的基准（以下新容量基准）。<br>新容量基准会被调整（不断地与 1.25 相乘），直到结果不小于原长度与要追加的元素数量之和（以下简称新长度）。最终，新容量<br>往往会、比新长度大一些，当然，相等也是可能的。</p>
+<p>一个切片的底层数组永远不会被替换。为什么？虽然在扩容的时候 Go 语言一定会生成新的底层数组，但是它也同时生成了新的切片。它是把新<br>的切片作为了新底层数组的窗口，而没有对原切片及其底层数组做任何改动。</p>
+<p><strong>在无需扩容时，<code>append</code> 函数返回的是指向原底层数组的新切片，而在需要扩容时，<code>append</code> 函数返回的是指向新底层数组的新切片</strong>。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>
