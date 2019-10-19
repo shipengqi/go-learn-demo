@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | unicode </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"unicode","path":"standards/text/unicode.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"标准库","type":"label"},{"text":"fmt","type":"link","path":"standards/io/fmt.html"},{"text":"io","type":"link","path":"standards/io/io.html"},{"text":"ioutil","type":"link","path":"standards/io/ioutil.html"},{"text":"bufio","type":"link","path":"standards/io/bufio.html"},{"text":"os","type":"link","path":"standards/os/os.html"},{"text":"filepath","type":"link","path":"standards/os/filepath.html"},{"text":"strings","type":"link","path":"standards/text/strings.html"},{"text":"strconv","type":"link","path":"standards/text/strconv.html"},{"text":"unicode","type":"link","path":"standards/text/unicode.html"},{"text":"log","type":"link","path":"standards/log.html"},{"text":"time","type":"link","path":"standards/time.html"},{"text":"http","type":"link","path":"standards/net/http.html"},{"text":"math","type":"link","path":"standards/data/math.html"},{"text":"sort","type":"link","path":"standards/data/sort.html"},{"text":"big","type":"link","path":"standards/data/big.html"},{"text":"container","type":"link","path":"standards/data/container.html"},{"text":"sql","type":"link","path":"standards/database/sql.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="unicode"><a href="#unicode" class="headerlink" title="unicode"></a>unicode</h1><p>go 对 unicode 的支持包含三个包 :</p>
+<ul>
+<li><code>unicode</code></li>
+<li><code>unicode/utf8</code></li>
+<li><code>unicode/utf16</code></li>
+</ul>
+<p>unicode 包包含基本的字符判断函数。utf8 包主要负责 <code>rune</code> 和 <code>byte</code> 之间的转换。utf16 包负责 <code>rune</code> 和 <code>uint16</code> 数组之间<br>的转换。</p>
+<h2 id="unicode-包"><a href="#unicode-包" class="headerlink" title="unicode 包"></a>unicode 包</h2><p>unicode 包含了对 <code>rune</code> 的判断。这个包把所有 unicode 涉及到的编码进行了分类，使用结构</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RangeTable <span class="keyword">struct</span> &#123;</span><br><span class="line">	R16         []Range16</span><br><span class="line">	R32         []Range32</span><br><span class="line">	LatinOffset <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来表示这个功能的字符集。这些字符集都集中列表在 <code>table.go</code> 这个源码里面。</p>
+<p>比如控制字符集：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _Pc = &amp;RangeTable&#123;</span><br><span class="line">	R16: []Range16&#123;</span><br><span class="line">		&#123;<span class="number">0x005f</span>, <span class="number">0x203f</span>, <span class="number">8160</span>&#125;,</span><br><span class="line">		&#123;<span class="number">0x2040</span>, <span class="number">0x2054</span>, <span class="number">20</span>&#125;,</span><br><span class="line">		&#123;<span class="number">0xfe33</span>, <span class="number">0xfe34</span>, <span class="number">1</span>&#125;,</span><br><span class="line">		&#123;<span class="number">0xfe4d</span>, <span class="number">0xfe4f</span>, <span class="number">1</span>&#125;,</span><br><span class="line">		&#123;<span class="number">0xff3f</span>, <span class="number">0xff3f</span>, <span class="number">1</span>&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回到包的函数，我们看到有下面这些判断函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func IsControl(r rune) bool  // 是否控制字符</span><br><span class="line">func IsDigit(r rune) bool  // 是否阿拉伯数字字符，即 0-9</span><br><span class="line">func IsGraphic(r rune) bool // 是否图形字符</span><br><span class="line">func IsLetter(r rune) bool // 是否字母</span><br><span class="line">func IsLower(r rune) bool // 是否小写字符</span><br><span class="line">func IsMark(r rune) bool // 是否符号字符</span><br><span class="line">func IsNumber(r rune) bool // 是否数字字符，比如罗马数字Ⅷ也是数字字符</span><br><span class="line">func IsOneOf(ranges []*RangeTable, r rune) bool // 是否是 RangeTable 中的一个</span><br><span class="line">func IsPrint(r rune) bool // 是否可打印字符</span><br><span class="line">func IsPunct(r rune) bool // 是否标点符号</span><br><span class="line">func IsSpace(r rune) bool // 是否空格</span><br><span class="line">func IsSymbol(r rune) bool // 是否符号字符</span><br><span class="line">func IsTitle(r rune) bool // 是否 title case</span><br><span class="line">func IsUpper(r rune) bool // 是否大写字符</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	single := <span class="string">'\u0015'</span></span><br><span class="line">	fmt.Println(unicode.IsControl(single))  <span class="comment">//true</span></span><br><span class="line">	single = <span class="string">'\ufe35'</span></span><br><span class="line">	fmt.Println(unicode.IsControl(single)) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">	digit := <span class="keyword">rune</span>(<span class="string">'1'</span>)</span><br><span class="line">	fmt.Println(unicode.IsDigit(digit)) <span class="comment">//true</span></span><br><span class="line">	fmt.Println(unicode.IsNumber(digit)) <span class="comment">//true</span></span><br><span class="line">	letter := <span class="keyword">rune</span>(<span class="string">' Ⅷ '</span>)</span><br><span class="line">	fmt.Println(unicode.IsDigit(letter)) <span class="comment">//false</span></span><br><span class="line">	fmt.Println(unicode.IsNumber(letter)) <span class="comment">//true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="utf8-包"><a href="#utf8-包" class="headerlink" title="utf8 包"></a>utf8 包</h2><p>utf8 里面的函数就有一些字节和字符的转换。</p>
+<p>判断是否符合 utf8 编码的函数：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Valid</span><span class="params">(p []<span class="keyword">byte</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="title">ValidRune</span><span class="params">(r <span class="keyword">rune</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="title">ValidString</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br></pre></td></tr></table></figure></p>
+<p>判断 rune 的长度的函数：</p>
+<ul>
+<li><code>func RuneLen(r rune) int</code></li>
+</ul>
+<p>判断字节串或者字符串的 rune 数</p>
+<ul>
+<li><code>func RuneCount(p []byte) int</code></li>
+<li><code>func RuneCountInString(s string) (n int)</code></li>
+</ul>
+<p>编码和解码 rune 到 byte</p>
+<ul>
+<li><code>func DecodeRune(p []byte) (r rune, size int)</code></li>
+<li><code>func EncodeRune(p []byte, r rune) int</code></li>
+</ul>
+<h2 id="2-5-3-utf16-包"><a href="#2-5-3-utf16-包" class="headerlink" title="2.5.3 utf16 包"></a>2.5.3 utf16 包</h2><p>utf16 的包的函数就比较少了。</p>
+<p>将 int16 和 rune 进行转换</p>
+<ul>
+<li><code>func Decode(s []uint16) []rune</code></li>
+<li><code>func Encode(s []rune) []uint16</code></li>
+</ul>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

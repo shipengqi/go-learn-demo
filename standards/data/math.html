@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | math </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"math","path":"standards/data/math.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"标准库","type":"label"},{"text":"fmt","type":"link","path":"standards/io/fmt.html"},{"text":"io","type":"link","path":"standards/io/io.html"},{"text":"ioutil","type":"link","path":"standards/io/ioutil.html"},{"text":"bufio","type":"link","path":"standards/io/bufio.html"},{"text":"os","type":"link","path":"standards/os/os.html"},{"text":"filepath","type":"link","path":"standards/os/filepath.html"},{"text":"strings","type":"link","path":"standards/text/strings.html"},{"text":"strconv","type":"link","path":"standards/text/strconv.html"},{"text":"unicode","type":"link","path":"standards/text/unicode.html"},{"text":"log","type":"link","path":"standards/log.html"},{"text":"time","type":"link","path":"standards/time.html"},{"text":"http","type":"link","path":"standards/net/http.html"},{"text":"math","type":"link","path":"standards/data/math.html"},{"text":"sort","type":"link","path":"standards/data/sort.html"},{"text":"big","type":"link","path":"standards/data/big.html"},{"text":"container","type":"link","path":"standards/data/container.html"},{"text":"sql","type":"link","path":"standards/database/sql.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="math"><a href="#math" class="headerlink" title="math"></a>math</h1><p>math 包实现的就是数学函数计算。</p>
+<h2 id="三角函数"><a href="#三角函数" class="headerlink" title="三角函数"></a>三角函数</h2><p>正弦函数，反正弦函数，双曲正弦，反双曲正弦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- func Sin(x float64) float64</span><br><span class="line">- func Asin(x float64) float64</span><br><span class="line">- func Sinh(x float64) float64</span><br><span class="line">- func Asinh(x float64) float64</span><br></pre></td></tr></table></figure></p>
+<p>一次性返回 <code>sin</code>,<code>cos</code></p>
+<ul>
+<li><code>func Sincos(x float64) (sin, cos float64)</code></li>
+</ul>
+<p>余弦函数，反余弦函数，双曲余弦，反双曲余弦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- func Cos(x float64) float64</span><br><span class="line">- func Acos(x float64) float64</span><br><span class="line">- func Cosh(x float64) float64</span><br><span class="line">- func Acosh(x float64) float64</span><br></pre></td></tr></table></figure></p>
+<p>正切函数，反正切函数，双曲正切，反双曲正切<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- func Tan(x float64) float64</span><br><span class="line">- func Atan(x float64) float64 和 func Atan2(y, x float64) float64</span><br><span class="line">- func Tanh(x float64) float64</span><br><span class="line">- func Atanh(x float64) float64</span><br></pre></td></tr></table></figure></p>
+<h2 id="幂次函数"><a href="#幂次函数" class="headerlink" title="幂次函数"></a>幂次函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- func Cbrt(x float64) float64 // 立方根函数</span><br><span class="line">- func Pow(x, y float64) float64  // x 的幂函数</span><br><span class="line">- func Pow10(e int) float64 // 10 根的幂函数</span><br><span class="line">- func Sqrt(x float64) float64 // 平方根</span><br><span class="line">- func Log(x float64) float64 // 对数函数</span><br><span class="line">- func Log10(x float64) float64 // 10 为底的对数函数</span><br><span class="line">- func Log2(x float64) float64  // 2 为底的对数函数</span><br><span class="line">- func Log1p(x float64) float64 // log(1 + x)</span><br><span class="line">- func Logb(x float64) float64 // 相当于 log2(x) 的绝对值</span><br><span class="line">- func Ilogb(x float64) int // 相当于 log2(x) 的绝对值的整数部分</span><br><span class="line">- func Exp(x float64) float64 // 指数函数</span><br><span class="line">- func Exp2(x float64) float64 // 2 为底的指数函数</span><br><span class="line">- func Expm1(x float64) float64 // Exp(x) - 1</span><br></pre></td></tr></table></figure>
+<h2 id="特殊函数"><a href="#特殊函数" class="headerlink" title="特殊函数"></a>特殊函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- func Inf(sign int) float64  // 正无穷</span><br><span class="line">- func IsInf(f float64, sign int) bool // 是否正无穷</span><br><span class="line">- func NaN() float64 // 无穷值</span><br><span class="line">- func IsNaN(f float64) (is bool) // 是否是无穷值</span><br><span class="line">- func Hypot(p, q float64) float64 // 计算直角三角形的斜边长</span><br></pre></td></tr></table></figure>
+<h2 id="类型转化函数"><a href="#类型转化函数" class="headerlink" title="类型转化函数"></a>类型转化函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- func Float32bits(f float32) uint32  // float32 和 unit32 的转换</span><br><span class="line">- func Float32frombits(b uint32) float32 // uint32 和 float32 的转换</span><br><span class="line">- func Float64bits(f float64) uint64 // float64 和 uint64 的转换</span><br><span class="line">- func Float64frombits(b uint64) float64 // uint64 和 float64 的转换</span><br></pre></td></tr></table></figure>
+<h2 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- func Abs(x float64) float64 // 绝对值函数</span><br><span class="line">- func Ceil(x float64) float64  // 向上取整</span><br><span class="line">- func Floor(x float64) float64 // 向下取整</span><br><span class="line">- func Mod(x, y float64) float64 // 取模</span><br><span class="line">- func Modf(f float64) (int float64, frac float64) // 分解 f，以得到 f 的整数和小数部分</span><br><span class="line">- func Frexp(f float64) (frac float64, exp int) // 分解 f，得到 f 的位数和指数</span><br><span class="line">- func Max(x, y float64) float64  // 取大值</span><br><span class="line">- func Min(x, y float64) float64  // 取小值</span><br><span class="line">- func Dim(x, y float64) float64 // 复数的维数</span><br><span class="line">- func J0(x float64) float64  // 0 阶贝塞尔函数</span><br><span class="line">- func J1(x float64) float64  // 1 阶贝塞尔函数</span><br><span class="line">- func Jn(n int, x float64) float64 // n 阶贝塞尔函数</span><br><span class="line">- func Y0(x float64) float64  // 第二类贝塞尔函数 0 阶</span><br><span class="line">- func Y1(x float64) float64  // 第二类贝塞尔函数 1 阶</span><br><span class="line">- func Yn(n int, x float64) float64 // 第二类贝塞尔函数 n 阶</span><br><span class="line">- func Erf(x float64) float64 // 误差函数</span><br><span class="line">- func Erfc(x float64) float64 // 余补误差函数</span><br><span class="line">- func Copysign(x, y float64) float64 // 以 y 的符号返回 x 值</span><br><span class="line">- func Signbit(x float64) bool // 获取 x 的符号</span><br><span class="line">- func Gamma(x float64) float64 // 伽玛函数</span><br><span class="line">- func Lgamma(x float64) (lgamma float64, sign int) // 伽玛函数的自然对数</span><br><span class="line">- func Ldexp(frac float64, exp int) float64 // value 乘以 2 的 exp 次幂</span><br><span class="line">- func Nextafter(x, y float64) (r float64) // 返回参数 x 在参数 y 方向上可以表示的最接近的数值，若 x 等于 y，则返回 x</span><br><span class="line">- func Nextafter32(x, y float32) (r float32) // 返回参数 x 在参数 y 方向上可以表示的最接近的数值，若 x 等于 y，则返回 x</span><br><span class="line">- func Remainder(x, y float64) float64 // 取余运算</span><br><span class="line">- func Trunc(x float64) float64 // 截取函数</span><br></pre></td></tr></table></figure>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

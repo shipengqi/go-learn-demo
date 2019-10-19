@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | log </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"log","path":"standards/log.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"标准库","type":"label"},{"text":"fmt","type":"link","path":"standards/io/fmt.html"},{"text":"io","type":"link","path":"standards/io/io.html"},{"text":"ioutil","type":"link","path":"standards/io/ioutil.html"},{"text":"bufio","type":"link","path":"standards/io/bufio.html"},{"text":"os","type":"link","path":"standards/os/os.html"},{"text":"filepath","type":"link","path":"standards/os/filepath.html"},{"text":"strings","type":"link","path":"standards/text/strings.html"},{"text":"strconv","type":"link","path":"standards/text/strconv.html"},{"text":"unicode","type":"link","path":"standards/text/unicode.html"},{"text":"log","type":"link","path":"standards/log.html"},{"text":"time","type":"link","path":"standards/time.html"},{"text":"http","type":"link","path":"standards/net/http.html"},{"text":"math","type":"link","path":"standards/data/math.html"},{"text":"sort","type":"link","path":"standards/data/sort.html"},{"text":"big","type":"link","path":"standards/data/big.html"},{"text":"container","type":"link","path":"standards/data/container.html"},{"text":"sql","type":"link","path":"standards/database/sql.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="log"><a href="#log" class="headerlink" title="log"></a>log</h1><p>log 模块用于在程序中输出日志。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"log"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123; </span><br><span class="line">    log.Print(<span class="string">"Hello World"</span>) <span class="comment">// 2019/09/12 13:56:36 Hello World</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h2><p>通过 <code>New</code> 函数可以创建多个 <code>Logger</code> 实例，函数声明如下：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(out io.Writer, prefix <span class="keyword">string</span>, flag <span class="keyword">int</span>)</span> *<span class="title">Logger</span></span></span><br></pre></td></tr></table></figure></p>
+<p>参数：</p>
+<ul>
+<li><code>out</code>：日志输出的 IO 对象，通常是标准输出 <code>os.Stdout</code>，<code>os.Stderr</code>，或者绑定到文件的 IO。</li>
+<li><code>prefix</code>：日志前缀，可以是任意字符串。</li>
+<li><code>flag</code>：日志包含的通用信息标识位</li>
+</ul>
+<p>一条日志的结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;日志前缀&#125; &#123;标识1&#125; &#123;标识2&#125; ... &#123;标识n&#125; &#123;日志内容&#125;</span><br></pre></td></tr></table></figure></p>
+<p>标识通过 <code>flag</code> 参数设置，当某个标识被设置，会在日志中进行显示，log 模块中已经提供了如下标识，多个标识通过 <code>|</code> 组合：</p>
+<ul>
+<li>Ldate 显示当前日期（当前时区）</li>
+<li>Ltime 显示当前时间（当前时区）</li>
+<li>microseconds 显示当前时间（微秒）</li>
+<li>Llongfile 包含路径的完整文件名</li>
+<li>Lshortfile 不包含路径的文件名</li>
+<li>LUTC Ldata 和 Ltime 使用 UTC 时间</li>
+<li>LstdFlags 标准 Logger 的标识，等价于 Ldate | Ltime</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">    <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    prefix := <span class="string">"[THIS IS THE LOG]"</span></span><br><span class="line">    logger := log.New(os.Stdout, prefix, log.LstdFlags | log.Lshortfile)</span><br><span class="line">    logger.Print(<span class="string">"Hello World"</span>) <span class="comment">// [THIS IS THE LOG]22019/09/12 12:34:07 log.go:11: Hello World</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>log 模块中日志输出分为三类，</p>
+<ul>
+<li>Print，输出日志。</li>
+<li>Fatal，在执行完 Print 之后，执行 <code>os.Exit(1)</code>。</li>
+<li>Panic。在执行完 Print 之后调用 <code>panic()</code> 方法。</li>
+</ul>
+<p>除了基础的 <code>Print</code> 之外，还有 <code>Printf</code> 和 <code>Println</code> 方法对输出进格式化，<code>Fatal</code> 和 <code>Panic</code> 也类似。</p>
+<h2 id="Level"><a href="#Level" class="headerlink" title="Level"></a>Level</h2><p><code>log</code> 包没有提供日志分级的功能，需要自己实现：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">    <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> (</span><br><span class="line">	logger = log.New(os.Stdout, <span class="string">"INFO: "</span>, log.Lshortfile)</span><br><span class="line">	infof = <span class="function"><span class="keyword">func</span><span class="params">(info <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">		logger.Print(info)</span><br><span class="line">	&#125;</span><br><span class="line">    )</span><br><span class="line">    infof(<span class="string">"Hello world"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

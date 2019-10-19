@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | ioutil </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"ioutil","path":"standards/io/ioutil.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"标准库","type":"label"},{"text":"fmt","type":"link","path":"standards/io/fmt.html"},{"text":"io","type":"link","path":"standards/io/io.html"},{"text":"ioutil","type":"link","path":"standards/io/ioutil.html"},{"text":"bufio","type":"link","path":"standards/io/bufio.html"},{"text":"os","type":"link","path":"standards/os/os.html"},{"text":"filepath","type":"link","path":"standards/os/filepath.html"},{"text":"strings","type":"link","path":"standards/text/strings.html"},{"text":"strconv","type":"link","path":"standards/text/strconv.html"},{"text":"unicode","type":"link","path":"standards/text/unicode.html"},{"text":"log","type":"link","path":"standards/log.html"},{"text":"time","type":"link","path":"standards/time.html"},{"text":"http","type":"link","path":"standards/net/http.html"},{"text":"math","type":"link","path":"standards/data/math.html"},{"text":"sort","type":"link","path":"standards/data/sort.html"},{"text":"big","type":"link","path":"standards/data/big.html"},{"text":"container","type":"link","path":"standards/data/container.html"},{"text":"sql","type":"link","path":"standards/database/sql.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="ioutil"><a href="#ioutil" class="headerlink" title="ioutil"></a>ioutil</h1><p>ioutil 提供了一些常用、方便的 IO 操作函数。</p>
+<h2 id="NopCloser-函数"><a href="#NopCloser-函数" class="headerlink" title="NopCloser 函数"></a>NopCloser 函数</h2><p>有时候我们需要传递一个 <code>io.ReadCloser</code> 的实例，而我们现在有一个 <code>io.Reader</code> 的实例，比如：<code>strings.Reader</code> ，这个时候 <code>NopCloser</code><br>就派上用场了。它包装一个 <code>io.Reader</code>，返回一个 <code>io.ReadCloser</code> ，而相应的 <code>Close</code> 方法啥也不做，只是返回 <code>nil</code>。</p>
+<p>比如，在标准库 <code>net/http</code> 包中的 <code>NewRequest</code>，接收一个 <code>io.Reader</code> 的 <code>body</code>，而实际上，<code>Request</code> 的 <code>Body</code>的类<br>型是 <code>io.ReadCloser</code>，因此，代码内部进行了判断，如果传递的 <code>io.Reader</code> 也实现了 <code>io.ReadCloser</code> 接口，则转换，否则通<br>过 <code>ioutil.NopCloser</code> 包装转换一下。相关代码如下：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rc, ok := body.(io.ReadCloser)</span><br><span class="line"><span class="keyword">if</span> !ok &amp;&amp; body != <span class="literal">nil</span> &#123;</span><br><span class="line">    rc = ioutil.NopCloser(body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="ReadAll-函数"><a href="#ReadAll-函数" class="headerlink" title="ReadAll 函数"></a>ReadAll 函数</h2><p>很多时候，我们需要一次性读取 <code>io.Reader</code> 中的数据，考虑到读取所有数据的需求比较多，Go 提供了 <code>ReadAll</code> 这个函数，用来从 <code>io.Reader</code> 中<br>一次读取所有数据。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadAll</span><span class="params">(r io.Reader)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>该函数成功调用后会返回 <code>err == nil</code> 而不是 <code>err == EOF</code>。</p>
+<h2 id="ReadDir-函数"><a href="#ReadDir-函数" class="headerlink" title="ReadDir 函数"></a>ReadDir 函数</h2><p>在 Go 中如何输出目录下的所有文件呢？</p>
+<p>在 <code>ioutil</code> 中提供了一个方便的函数：<code>ReadDir</code>，它读取目录并返回排好序的文件和子目录名（ <code>[]os.FileInfo</code> ）。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	dir := os.Args[<span class="number">1</span>]</span><br><span class="line">	listAll(dir,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listAll</span><span class="params">(path <span class="keyword">string</span>, curHier <span class="keyword">int</span>)</span></span>&#123;</span><br><span class="line">	fileInfos, err := ioutil.ReadDir(path)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span>&#123;fmt.Println(err); <span class="keyword">return</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, info := <span class="keyword">range</span> fileInfos&#123;</span><br><span class="line">		<span class="keyword">if</span> info.IsDir()&#123;</span><br><span class="line">			<span class="keyword">for</span> tmpHier := curHier; tmpHier &gt; <span class="number">0</span>; tmpHier--&#123;</span><br><span class="line">				fmt.Printf(<span class="string">"|\t"</span>)</span><br><span class="line">			&#125;</span><br><span class="line">			fmt.Println(info.Name(),<span class="string">"\\"</span>)</span><br><span class="line">			listAll(path + <span class="string">"/"</span> + info.Name(),curHier + <span class="number">1</span>)</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">for</span> tmpHier := curHier; tmpHier &gt; <span class="number">0</span>; tmpHier--&#123;</span><br><span class="line">				fmt.Printf(<span class="string">"|\t"</span>)</span><br><span class="line">			&#125;</span><br><span class="line">			fmt.Println(info.Name())</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ReadFile-和-WriteFile-函数"><a href="#ReadFile-和-WriteFile-函数" class="headerlink" title="ReadFile 和 WriteFile 函数"></a>ReadFile 和 WriteFile 函数</h2><p><code>ReadFile</code> 读取整个文件的内容，<code>ReadFile</code> 会先判断文件的大小，给 <code>bytes.Buffer</code> 一个预定义容量，避免额外分配内存。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadFile</span><span class="params">(filename <span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>ReadFile</code> 从 <code>filename</code> 指定的文件中读取数据并返回文件的内容。成功的调用返回的 <code>err</code> 为 <code>nil</code> 而非 <code>EOF</code>。因为本函数定义为<br>读取整个文件，它不会将读取返回的 <code>EOF</code> 视为应报告的错误。</p>
+</blockquote>
+<p><strong>WriteFile</strong>：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WriteFile</span><span class="params">(filename <span class="keyword">string</span>, data []<span class="keyword">byte</span>, perm os.FileMode)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>WriteFile</code> 将 <code>data</code> 写入 <code>filename</code> 文件中，当文件不存在时会根据 <code>perm</code> 指定的权限进行创建一个,文件存在时会先清空文件内容。<br>对于 <code>perm</code> 参数，我们一般可以指定为：<code>0666</code>。</p>
+</blockquote>
+<h2 id="TempDir-和-TempFile-函数"><a href="#TempDir-和-TempFile-函数" class="headerlink" title="TempDir 和 TempFile 函数"></a>TempDir 和 TempFile 函数</h2><p>操作系统中一般都会提供临时目录，比如 linux 下的 <code>/tmp</code> 目录（通过 <code>os.TempDir()</code> 可以获取到)。有时候，我们自己需要创建临时目录，<br>比如 Go 工具链源码中（<code>src/cmd/go/build.go</code>），通过 <code>TempDir</code> 创建一个临时目录，用于存放编译过程的临时文件：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b.work, err = ioutil.TempDir(<span class="string">""</span>, <span class="string">"go-build"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>第一个参数如果为空，表明在系统默认的临时目录（ <code>os.TempDir</code> ）中创建临时目录；第二个参数指定临时目录名的前缀，该函数返回临时目录的路径。</p>
+<p>相应的，<code>TempFile</code> 用于创建临时文件。如 <code>gofmt</code> 命令的源码中创建临时文件：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f1, err := ioutil.TempFile(<span class="string">""</span>, <span class="string">"gofmt"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>参数和 <code>ioutil.TempDir</code> 参数含义类似。</p>
+<p>这里需要<strong>注意</strong>：创建者创建的临时文件和临时目录要负责删除这些临时目录和文件。如删除临时文件：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    f.Close()</span><br><span class="line">    os.Remove(f.Name())</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure></p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

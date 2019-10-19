@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Golang learning | big </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/golang-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/golang-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"big","path":"standards/data/big.html"},"data":{"navigation":{"logo":{"text":"Golang Learn","type":"link","path":"index.html"},"main":[{"text":"Golang 基础","type":"label"},{"text":"Go 环境配置","type":"link","path":"basic/env_config.html"},{"text":"包","type":"link","path":"basic/package.html"},{"text":"基础数据类型","type":"link","path":"basic/basic_data.html"},{"text":"变量","type":"link","path":"basic/var.html"},{"text":"常量","type":"link","path":"basic/constant.html"},{"text":"控制语句","type":"link","path":"basic/flow.html"},{"text":"运算符","type":"link","path":"basic/operator.html"},{"text":"作用域","type":"link","path":"basic/scope.html"},{"text":"指针","type":"link","path":"basic/pointer.html"},{"text":"数组","type":"link","path":"basic/array.html"},{"text":"切片","type":"link","path":"basic/slice.html"},{"text":"字典","type":"link","path":"basic/map.html"},{"text":"函数","type":"link","path":"basic/function.html"},{"text":"结构体","type":"link","path":"basic/struct.html"},{"text":"接口","type":"link","path":"basic/interface.html"},{"text":"面向对象","type":"link","path":"basic/oop.html"},{"text":"错误","type":"link","path":"basic/error.html"},{"text":"序列化","type":"link","path":"basic/json.html"},{"text":"反射","type":"link","path":"basic/reflect.html"},{"text":"测试","type":"link","path":"basic/test.html"},{"text":"并发编程","type":"label"},{"text":"goroutine","type":"link","path":"concurrent/goroutine.html"},{"text":"channel","type":"link","path":"concurrent/channel.html"},{"text":"同步和锁","type":"link","path":"concurrent/sync_lock.html"},{"text":"内存分配","type":"label"},{"text":"内存分配","type":"link","path":"advance/mm.html"},{"text":"垃圾回收","type":"label"},{"text":"垃圾回收","type":"link","path":"advance/gc.html"},{"text":"标准库","type":"label"},{"text":"fmt","type":"link","path":"standards/io/fmt.html"},{"text":"io","type":"link","path":"standards/io/io.html"},{"text":"ioutil","type":"link","path":"standards/io/ioutil.html"},{"text":"bufio","type":"link","path":"standards/io/bufio.html"},{"text":"os","type":"link","path":"standards/os/os.html"},{"text":"filepath","type":"link","path":"standards/os/filepath.html"},{"text":"strings","type":"link","path":"standards/text/strings.html"},{"text":"strconv","type":"link","path":"standards/text/strconv.html"},{"text":"unicode","type":"link","path":"standards/text/unicode.html"},{"text":"log","type":"link","path":"standards/log.html"},{"text":"time","type":"link","path":"standards/time.html"},{"text":"http","type":"link","path":"standards/net/http.html"},{"text":"math","type":"link","path":"standards/data/math.html"},{"text":"sort","type":"link","path":"standards/data/sort.html"},{"text":"big","type":"link","path":"standards/data/big.html"},{"text":"container","type":"link","path":"standards/data/container.html"},{"text":"sql","type":"link","path":"standards/database/sql.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/golang-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/golang-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/golang-learn/index.html" class="doc-navbar__logo"><img src="/golang-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Golang Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="big"><a href="#big" class="headerlink" title="big"></a>big</h1><p><code>big</code> 是 Go 语言提供的进行大数操作的标准库，实现了任意精度算术（大数）。</p>
+<p>Go 语言中的 <code>float64</code> 类型进行浮点运算，返回结果将精确到 15 位，足以满足大多数的任务。但是当对超出 <code>int64</code> 或者 <code>uint64</code> 类型这样的大<br>数进行计算时，如果对精度没有要求，<code>float32</code> 或者 <code>float64</code> 可以胜任，但如果对精度有严格要求的时候，则不能使用浮点数，在内存中它们只能<br>被近似的表示。</p>
+<p>对于整数的高精度计算 Go 语言中提供了 <code>big</code> 包，被包含在 <code>math</code> 包下：有用来表示大整数的 <code>big.Int</code> 和表示大有理数的 <code>big.Rat</code> 类型<br>（可以表示为 <code>2/5</code> 或 <code>3.1416</code> 这样的分数，而不是无理数或 <code>π</code>）。这些类型可以实现任意位类型的数字，只要内存足够大。缺点是更大的内存<br>和处理开销使它们使用起来要比内置的数字类型慢很多。</p>
+<p>大的整型数字是通过 <code>big.NewInt(n)</code> 来构造的，其中 <code>n</code> 为 <code>int64</code> 类型整数。而大有理数是通过 <code>big.NewRat(n, d)</code> 方法构造。<code>n</code>（分子）<br>和 <code>d</code>（分母）都是 <code>int64</code> 型整数。因为 Go 语言不支持运算符重载，所以所有大数字类型都有像是 <code>Add()</code> 和 <code>Mul()</code> 这样的方法。它们作用<br>于作为 receiver 的整数和有理数，大多数情况下它们修改 receiver 并以 receiver 作为返回结果。因为没有必要创建 <code>big.Int</code> 类型的临<br>时变量来存放中间结果，所以运算可以被链式地调用，并节省内存。</p>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math"</span></span><br><span class="line">	<span class="string">"math/big"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Here are some calculations with bigInts:</span></span><br><span class="line">	im := big.NewInt(math.MaxInt64)</span><br><span class="line">	in := im</span><br><span class="line">	io := big.NewInt(<span class="number">1956</span>)</span><br><span class="line">	ip := big.NewInt(<span class="number">1</span>)</span><br><span class="line">	ip.Mul(im, in).Add(ip, im).Div(ip, io)</span><br><span class="line">	fmt.Printf(<span class="string">"Big Int: %v\n"</span>, ip)</span><br><span class="line">	<span class="comment">// Here are some calculations with bigInts:</span></span><br><span class="line">	rm := big.NewRat(math.MaxInt64, <span class="number">1956</span>)</span><br><span class="line">	rn := big.NewRat(<span class="number">-1956</span>, math.MaxInt64)</span><br><span class="line">	ro := big.NewRat(<span class="number">19</span>, <span class="number">56</span>)</span><br><span class="line">	rp := big.NewRat(<span class="number">1111</span>, <span class="number">2222</span>)</span><br><span class="line">	rq := big.NewRat(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">	rq.Mul(rm, rn).Add(rq, ro).Mul(rq, rp)</span><br><span class="line">	fmt.Printf(<span class="string">"Big Rat: %v\n"</span>, rq)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Output:</span></span><br><span class="line"><span class="comment">Big Int: 43492122561469640008497075573153004</span></span><br><span class="line"><span class="comment">Big Rat: -37/112</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/golang-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>
